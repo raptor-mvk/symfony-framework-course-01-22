@@ -18,4 +18,12 @@ class UserManager
             new User('Игнат', 'Глебович', 'Лопухов', '+74445556677'),
         ];
     }
+
+    public function getUsersListVue(): array
+    {
+        return array_map(
+            static fn(User $user) => $user->toArray(),
+            $this->getUserList()
+        );
+    }
 }
