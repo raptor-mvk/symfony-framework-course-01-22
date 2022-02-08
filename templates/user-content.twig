@@ -10,3 +10,9 @@
         {% endfor %}
     </ol>
 {% endblock %}
+{% block footer %}
+    <h1>Footer</h1>
+    {{ block('body') }}
+    <h1>Repeat twice</h1>
+    {{ block('body') }}
+{% endblock %}
