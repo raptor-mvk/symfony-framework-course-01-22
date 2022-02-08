@@ -1,0 +1,5 @@
+{% macro user_table_body(users) %}
+    {% for user in users %}
+        <tr><td>({{ user.phone }})</td><td>{{ user.firstName|lower }}</td><td>{{ user.middleName|upper }}</td><td>{{ user.lastName }}</td></tr>
+    {% endfor %}
+{% endmacro %}

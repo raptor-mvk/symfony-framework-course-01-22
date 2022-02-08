@@ -1,0 +1,18 @@
+{% extends 'layout.twig' %}
+
+{% block title %}
+    User list
+{% endblock %}
+{% block body %}
+    <ol id="user.list">
+        {% for user in users %}
+            <li>{{ user.firstName|upper }} {{ user.middleName|lower }} {{ user.lastName }} ({{ user.phone }}) </li>
+        {% endfor %}
+    </ol>
+{% endblock %}
+{% block footer %}
+    <h1>Footer</h1>
+    {{ block('body') }}
+    <h1>Repeat twice</h1>
+    {{ block('body') }}
+{% endblock %}
