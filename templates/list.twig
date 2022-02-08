@@ -7,7 +7,7 @@
 <body>
 <ul id="user.list">
     {% for user in users %}
-        <li>{{ user.firstName }} {{ user.middleName }} {{ user.lastName }} ({{ user.phone }}) </li>
+        <li>{{ user.firstName|upper }} {{ user.middleName|lower }} {{ user.lastName }} ({{ user.phone }}) </li>
     {% endfor %}
 </ul>
 </body>
