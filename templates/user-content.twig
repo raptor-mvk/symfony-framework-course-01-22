@@ -1,0 +1,12 @@
+{% extends 'layout.twig' %}
+
+{% block title %}
+    User list
+{% endblock %}
+{% block body %}
+    <ol id="user.list">
+        {% for user in users %}
+            <li>{{ user.firstName|upper }} {{ user.middleName|lower }} {{ user.lastName }} ({{ user.phone }}) </li>
+        {% endfor %}
+    </ol>
+{% endblock %}

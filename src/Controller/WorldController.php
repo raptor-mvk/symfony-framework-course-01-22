@@ -17,6 +17,6 @@ class WorldController extends AbstractController
 
     public function hello(): Response
     {
-        return $this->render('list.twig', ['users' => $this->userManager->getUserList()]);
+        return $this->render('user-content.twig', ['users' => $this->userManager->getUserList()]);
     }
 }
