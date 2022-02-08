@@ -1,0 +1,15 @@
+{% extends 'layout.twig' %}
+
+{% block title %}
+    User table
+{% endblock %}
+{% block body %}
+    <table>
+        <tbody>
+        <tr><th>Имя</th><th>Отчество</th><th>Фамилия</th><th>Телефон</th></tr>
+        {% for user in users %}
+            <tr><td>{{ user.firstName }}</td><td>{{ user.middleName }}</td><td>{{ user.lastName }}</td><td>({{ user.phone }})</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
