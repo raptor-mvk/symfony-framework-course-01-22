@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>User list</title>
+</head>
+<body>
+<ul id="user.list">
+    {% for user in users %}
+        <li>{{ user.firstName }} {{ user.middleName }} {{ user.lastName }} ({{ user.phone }}) </li>
+    {% endfor %}
+</ul>
+</body>
+</html>

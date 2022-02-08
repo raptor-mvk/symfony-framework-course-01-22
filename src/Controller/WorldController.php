@@ -2,12 +2,21 @@
 
 namespace App\Controller;
 
+use App\Manager\UserManager;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-class WorldController
+class WorldController extends AbstractController
 {
+    private UserManager $userManager;
+
+    public function __construct(UserManager $userManager)
+    {
+        $this->userManager = $userManager;
+    }
+
     public function hello(): Response
     {
-        return new Response('<html><body><h1><b>Hello,</b> <i>world</i>!</h1></body></html>');
+        return $this->render('list.twig', ['users' => $this->userManager->getUserList()]);
     }
 }
