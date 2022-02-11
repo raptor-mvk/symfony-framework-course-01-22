@@ -30,4 +30,16 @@ class UserBuilderService
 
         return $user;
     }
+
+    /**
+     * @return User[]
+     */
+    public function createUserWithFollower(string $login, string $followerLogin): array
+    {
+        $user = $this->userManager->create($login);
+        $follower = $this->userManager->create($followerLogin);
+        $this->userManager->subscribeUser($user, $follower);
+
+        return [$user, $follower];
+    }
 }
