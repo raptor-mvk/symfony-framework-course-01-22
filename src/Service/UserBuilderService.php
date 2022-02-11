@@ -27,7 +27,9 @@ class UserBuilderService
         foreach ($texts as $text) {
             $this->tweetManager->postTweet($user, $text);
         }
+        $userId = $user->getId();
+        $this->userManager->clearEntityManager();
 
-        return $user;
+        return $this->userManager->findUser($userId);
     }
 }
