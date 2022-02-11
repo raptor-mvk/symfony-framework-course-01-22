@@ -18,7 +18,7 @@ class WorldController extends AbstractController
 
     public function hello(): Response
     {
-        $users = $this->userManager->findUsersByLogin('Ivan Ivanov');
+        $users = $this->userManager->findUsersByCriteria('J.R.R. Tolkien');
 
         return $this->json(array_map(static fn(User $user) => $user->toArray(), $users));
     }
