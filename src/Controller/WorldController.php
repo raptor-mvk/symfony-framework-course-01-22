@@ -2,26 +2,25 @@
 
 namespace App\Controller;
 
-use App\Manager\UserManager;
-use JsonException;
+use App\Service\UserBuilderService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 class WorldController extends AbstractController
 {
-    private UserManager $userManager;
+    private UserBuilderService $userBuilderService;
 
-    public function __construct(UserManager $userManager)
+    public function __construct(UserBuilderService $userBuilderService)
     {
-        $this->userManager = $userManager;
+        $this->userBuilderService = $userBuilderService;
     }
 
-    /**
-     * @throws JsonException
-     */
     public function hello(): Response
     {
-        $user = $this->userManager->create('My user');
+        $user = $this->userBuilderService->createUserWithTweets(
+            'J.R.R. Tolkien',
+            ['The Hobbit', 'The Lord of the Rings']
+        );
 
         return $this->json($user->toArray());
     }
