@@ -2,68 +2,70 @@
 
 namespace App\Entity;
 
+use DateTime;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Table(name: '`user`')]
+#[ORM\Entity]
 class User
 {
-    private string $firstName;
-    private string $middleName;
-    private string $lastName;
-    private string $phone;
+    #[ORM\Column(name: 'id', type: 'bigint', unique:true)]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    private ?int $id = null;
 
-    public function __construct(string $firstName, string $middleName, string $lastName, string $phone)
+    #[ORM\Column(type: 'string', length: 32, nullable: false)]
+    private string $login;
+
+    #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
+    private DateTime $createdAt;
+
+    #[ORM\Column(name: 'updated_at', type: 'datetime', nullable: false)]
+    private DateTime $updatedAt;
+
+    public function getId(): int
     {
-        $this->firstName = $firstName;
-        $this->middleName = $middleName;
-        $this->lastName = $lastName;
-        $this->phone = $phone;
+        return $this->id;
     }
 
-    public function getFirstName(): string
+    public function setId(int $id): void
     {
-        return $this->firstName;
+        $this->id = $id;
     }
 
-    public function setFirstName(string $firstName): void
+    public function getLogin(): string
     {
-        $this->firstName = $firstName;
+        return $this->login;
     }
 
-    public function getMiddleName(): string
+    public function setLogin(string $login): void
     {
-        return $this->middleName;
+        $this->login = $login;
     }
 
-    public function setMiddleName(string $middleName): void
-    {
-        $this->middleName = $middleName;
+    public function getCreatedAt(): DateTime {
+        return $this->createdAt;
     }
 
-    public function getLastName(): string
-    {
-        return $this->lastName;
+    public function setCreatedAt(): void {
+        $this->createdAt = new DateTime();
     }
 
-    public function setLastName(string $lastName): void
-    {
-        $this->lastName = $lastName;
+    public function getUpdatedAt(): DateTime {
+        return $this->updatedAt;
     }
 
-    public function getPhone(): string
-    {
-        return $this->phone;
-    }
-
-    public function setPhone(string $phone): void
-    {
-        $this->phone = $phone;
+    public function setUpdatedAt(): void {
+        $this->updatedAt = new DateTime();
     }
 
     public function toArray(): array
     {
         return [
-            'firstName' => $this->firstName,
-            'middleName' => $this->middleName,
-            'lastName' => $this->lastName,
-            'phone' => $this->phone,
+            'id' => $this->id,
+            'login' => $this->login,
+            'createdAt' => $this->createdAt->format('Y-m-d H:i:s'),
+            'updatedAt' => $this->updatedAt->format('Y-m-d H:i:s'),
         ];
     }
 }
