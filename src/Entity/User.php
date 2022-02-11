@@ -79,4 +79,10 @@ class User
             'tweets' => array_map(static fn(Tweet $tweet) => $tweet->toArray(), $this->tweets->toArray()),
         ];
     }
-}
+
+    public function addTweet(Tweet $tweet): void
+    {
+        if (!$this->tweets->contains($tweet)) {
+            $this->tweets->add($tweet);
+        }
+    }}

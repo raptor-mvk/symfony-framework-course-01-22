@@ -22,6 +22,7 @@ class TweetManager
         $tweet->setText($text);
         $tweet->setCreatedAt();
         $tweet->setUpdatedAt();
+        $author->addTweet($tweet);
         $this->entityManager->persist($tweet);
         $this->entityManager->flush();
     }
