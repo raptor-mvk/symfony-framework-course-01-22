@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220214183923 extends AbstractMigration
+final class Version20220214184450 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -39,7 +39,6 @@ final class Version20220214183923 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE SCHEMA public');
         $this->addSql('ALTER TABLE subscription DROP CONSTRAINT FK_A3C664D3F675F31B');
         $this->addSql('ALTER TABLE subscription DROP CONSTRAINT FK_A3C664D3AC24F853');
         $this->addSql('ALTER TABLE tweet DROP CONSTRAINT FK_3D660A3BF675F31B');
