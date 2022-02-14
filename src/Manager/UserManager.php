@@ -67,4 +67,16 @@ class UserManager
 
         return $repository->matching($criteria)->toArray();
     }
+
+    public function updateUserLogin(int $userId, string $login): ?User
+    {
+        $user = $this->findUser($userId);
+        if (!($user instanceof User)) {
+            return null;
+        }
+        $user->setLogin($login);
+        $this->entityManager->flush();
+
+        return $user;
+    }
 }
