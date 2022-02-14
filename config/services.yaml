@@ -26,3 +26,7 @@ services:
     App\Symfony\MigrationEventSubscriber:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    App\Symfony\MetaTimestampsPrePersistEventListener:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }

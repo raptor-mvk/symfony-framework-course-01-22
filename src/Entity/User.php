@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: '`user`')]
 #[ORM\Entity]
-class User
+class User implements HasMetaTimestampsInterface
 {
     #[ORM\Column(name: 'id', type: 'bigint', unique:true)]
     #[ORM\Id]
