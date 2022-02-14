@@ -79,4 +79,15 @@ class UserManager
 
         return $user;
     }
+
+    public function findUsersWithQueryBuilder(string $login): array
+    {
+        $queryBuilder = $this->entityManager->createQueryBuilder();
+        $queryBuilder->select('u')
+            ->from(User::class, 'u')
+            ->andWhere($queryBuilder->expr()->like('u.login',':userLogin'))
+            ->setParameter('userLogin', "%$login%");
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 }
