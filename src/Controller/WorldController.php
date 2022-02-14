@@ -20,7 +20,10 @@ class WorldController extends AbstractController
     {
         /** @var User $user */
         $user = $this->userManager->findUser(3);
-        $this->userManager->updateUserLoginWithQueryBuilder($user->getId(), 'User is updated');
+        $userId = $user->getId();
+        $this->userManager->updateUserLoginWithQueryBuilder($userId, 'User is updated');
+        $this->userManager->clearEntityManager();
+        $user = $this->userManager->findUser($userId);
 
         return $this->json($user->toArray());
     }
