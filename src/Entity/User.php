@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: '`user`')]
 #[ORM\Entity]
+#[ORM\HasLifecycleCallbacks]
 class User implements HasMetaTimestampsInterface
 {
     #[ORM\Column(name: 'id', type: 'bigint', unique:true)]
@@ -76,6 +77,7 @@ class User implements HasMetaTimestampsInterface
         return $this->createdAt;
     }
 
+    #[ORM\PrePersist]
     public function setCreatedAt(): void {
         $this->createdAt = new DateTime();
     }
@@ -84,6 +86,7 @@ class User implements HasMetaTimestampsInterface
         return $this->updatedAt;
     }
 
+    #[ORM\PrePersist]
     public function setUpdatedAt(): void {
         $this->updatedAt = new DateTime();
     }
