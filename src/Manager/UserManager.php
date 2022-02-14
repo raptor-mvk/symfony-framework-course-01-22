@@ -134,4 +134,19 @@ class UserManager
 
         return $queryBuilder->getQuery()->getOneOrNullResult(AbstractQuery::HYDRATE_ARRAY);
     }
+
+    /**
+     * @throws \Doctrine\DBAL\Exception
+     */
+    public function findUserWithTweetsWithDBALQueryBuilder(int $userId): array
+    {
+        $queryBuilder = $this->entityManager->getConnection()->createQueryBuilder();
+        $queryBuilder->select('u', 't')
+            ->from('"user"', 'u')
+            ->leftJoin('u', 'tweet', 't', 'u.id = t.author_id')
+            ->where($queryBuilder->expr()->eq('u.id', ':userId'))
+            ->setParameter('userId', $userId);
+
+        return $queryBuilder->execute()->fetchAllNumeric();
+    }
 }
