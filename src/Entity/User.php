@@ -6,10 +6,12 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Table(name: '`user`')]
 #[ORM\Entity]
-class User
+#[ORM\HasLifecycleCallbacks]
+class User implements HasMetaTimestampsInterface
 {
     #[ORM\Column(name: 'id', type: 'bigint', unique:true)]
     #[ORM\Id]
@@ -20,9 +22,11 @@ class User
     private string $login;
 
     #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
+    #[Gedmo\Timestampable(on: 'create')]
     private DateTime $createdAt;
 
     #[ORM\Column(name: 'updated_at', type: 'datetime', nullable: false)]
+    #[Gedmo\Timestampable(on: 'update')]
     private DateTime $updatedAt;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: 'Tweet')]
