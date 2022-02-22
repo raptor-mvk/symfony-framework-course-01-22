@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Controller\Api\v1;
+namespace App\Controller\Api\v2;
 
 use App\Entity\User;
 use App\Manager\UserManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(path: '/api/v1/user')]
+#[Route(path: 'api/v2/user')]
 class UserController extends AbstractController
 {
     private UserManager $userManager;
@@ -35,19 +37,26 @@ class UserController extends AbstractController
     #[Route(path: '', methods: ['GET'])]
     public function getUsersAction(Request $request): Response
     {
-        $perPage = $request->query->get('perPage');
-        $page = $request->query->get('page');
+        $perPage = $request->request->get('perPage');
+        $page = $request->request->get('page');
         $users = $this->userManager->getUsers($page ?? 0, $perPage ?? 20);
         $code = empty($users) ? 204 : 200;
 
         return new JsonResponse(['users' => array_map(static fn(User $user) => $user->toArray(), $users)], $code);
     }
 
-    #[Route(path: '', methods: ['DELETE'])]
-    public function deleteUserAction(Request $request): Response
+    #[Route(path: '/by-login/{user_login}', methods: ['GET'], priority: 2)]
+    #[ParamConverter('user', options: ['mapping' => ['user_login' => 'login']])]
+    public function getUserByLoginAction(User $user): Response
     {
-        $userId = $request->query->get('userId');
-        $result = $this->userManager->deleteUserById($userId);
+        return new JsonResponse(['user' => $user->toArray()], 200);
+    }
+
+    #[Route(path: '/{user_id}', requirements: ['user_id' => '\d+'], methods: ['DELETE'])]
+    #[Entity('user', expr: 'repository.find(user_id)')]
+    public function deleteUserAction(User $user): Response
+    {
+        $result = $this->userManager->deleteUser($user);
 
         return new JsonResponse(['success' => $result], $result ? 200 : 404);
     }
@@ -55,18 +64,11 @@ class UserController extends AbstractController
     #[Route(path: '', methods: ['PATCH'])]
     public function updateUserAction(Request $request): Response
     {
-        $userId = $request->query->get('userId');
-        $login = $request->query->get('login');
+        $userId = $request->request->get('userId');
+        $login = $request->request->get('login');
         $result = $this->userManager->updateUser($userId, $login);
+        [$data, $code] = $result === null ? [null, 404] : [['user' => $result->toArray()], 200];
 
-        return new JsonResponse(['success' => $result !== null], ($result !== null) ? 200 : 404);
-    }
-
-    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['DELETE'])]
-    public function deleteUserByIdAction(int $id): Response
-    {
-        $result = $this->userManager->deleteUserById($id);
-
-        return new JsonResponse(['success' => $result], $result ? 200 : 404);
+        return new JsonResponse($data, $code);
     }
 }
