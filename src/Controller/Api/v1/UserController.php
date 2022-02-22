@@ -60,4 +60,12 @@ class UserController extends AbstractController
 
         return new JsonResponse(['success' => $result], $result ? 200 : 404);
     }
+
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['DELETE'])]
+    public function deleteUserByIdAction(int $id): Response
+    {
+        $result = $this->userManager->deleteUser($id);
+
+        return new JsonResponse(['success' => $result], $result ? 200 : 404);
+    }
 }
