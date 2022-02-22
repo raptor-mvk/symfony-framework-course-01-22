@@ -2,35 +2,21 @@
 
 namespace App\Controller;
 
-use App\Manager\UserManager;
-use App\Service\UserBuilderService;
-use Doctrine\ORM\NonUniqueResultException;
+use App\Service\GreeterService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 class WorldController extends AbstractController
 {
-    private UserManager $userManager;
+    private GreeterService $greeterService;
 
-    private UserBuilderService $userBuilderService;
-
-    public function __construct(UserManager $userManager, UserBuilderService $userBuilderService)
+    public function __construct(GreeterService $greeterService)
     {
-        $this->userManager = $userManager;
-        $this->userBuilderService = $userBuilderService;
+        $this->greeterService = $greeterService;
     }
 
-    /**
-     * @throws \Doctrine\DBAL\Exception
-     */
     public function hello(): Response
     {
-        $user = $this->userBuilderService->createUserWithTweets(
-            'Charles Dickens',
-            ['Oliver Twist', 'The Christmas Carol']
-        );
-        $userData = $this->userManager->findUserWithTweetsWithDBALQueryBuilder($user->getId());
-
-        return $this->json($userData);
+        return new Response("<html><body>{$this->greeterService->greet('world')}</body></html>");
     }
 }
