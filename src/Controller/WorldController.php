@@ -3,25 +3,25 @@
 namespace App\Controller;
 
 use App\Service\FormatService;
-use App\Service\GreeterService;
+use App\Service\MessageService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 class WorldController extends AbstractController
 {
-    private GreeterService $greeterService;
-
     private FormatService $formatService;
 
-    public function __construct(FormatService $formatService, GreeterService $greeterService)
+    private MessageService $messageService;
+
+    public function __construct(FormatService $formatService, MessageService $messageService)
     {
-        $this->greeterService = $greeterService;
         $this->formatService = $formatService;
+        $this->messageService = $messageService;
     }
 
     public function hello(): Response
     {
-        $result = $this->formatService->format($this->greeterService->greet('world'));
+        $result = $this->formatService->format($this->messageService->printMessages('world'));
 
         return new Response("<html><body>$result</body></html>");
     }

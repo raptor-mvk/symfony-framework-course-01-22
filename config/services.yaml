@@ -27,17 +27,15 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    App\Service\GreeterService:
-        arguments:
-            $greet: 'Hello'
-
     strong_formatter:
         class: App\Service\FormatService
         factory: ['App\Service\FormatServiceFactory', 'strongFormatService']
+        tags: ['app.formatter_service']
 
     cite_formatter:
         class: App\Service\FormatService
         factory: ['@App\Service\FormatServiceFactory', 'citeFormatService']
+        tags: ['app.formatter_service']
 
     main_header_formatter:
         class: App\Service\FormatService
@@ -46,4 +44,33 @@ services:
 
     App\Controller\WorldController:
         arguments:
-            $formatService: '@cite_formatter'
+            $formatService: '@list_formatter'
+
+    hello_greeter:
+        class: App\Service\GreeterService
+        arguments:
+            $greet: 'Hello'
+        tags: ['app.greeter_service']
+
+    greetings_greeter:
+        class: App\Service\GreeterService
+        arguments:
+            $greet: 'Greetings'
+        tags: ['app.greeter_service']
+
+    hi_greeter:
+        class: App\Service\GreeterService
+        arguments:
+            $greet: 'Hi'
+        tags: ['app.greeter_service']
+
+    list_formatter:
+        class: App\Service\FormatService
+        calls:
+            - [setTag, ['ol']]
+
+    list_item_formatter:
+        class: App\Service\FormatService
+        calls:
+            - [setTag, ['li']]
+        tags: ['app.formatter_service']
