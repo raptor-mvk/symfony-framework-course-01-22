@@ -54,8 +54,8 @@ class UserController extends AbstractController
     #[Route(path: '', methods: ['PATCH'])]
     public function updateUserAction(Request $request): Response
     {
-        $userId = $request->request->get('userId');
-        $login = $request->request->get('login');
+        $userId = $request->query->get('userId');
+        $login = $request->query->get('login');
         $result = $this->userManager->updateUser($userId, $login);
 
         return new JsonResponse(['success' => $result], $result ? 200 : 404);
