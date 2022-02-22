@@ -26,3 +26,54 @@ services:
     App\Symfony\MigrationEventSubscriber:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    strong_formatter:
+        class: App\Service\FormatService
+        factory: ['App\Service\FormatServiceFactory', 'strongFormatService']
+        tags: ['app.formatter_service']
+
+    cite_formatter:
+        class: App\Service\FormatService
+        factory: ['@App\Service\FormatServiceFactory', 'citeFormatService']
+        tags: ['app.formatter_service']
+
+    main_header_formatter:
+        class: App\Service\FormatService
+        factory: ['@App\Service\FormatServiceFactory', 'headerFormatService']
+        arguments: [1]
+
+    App\Controller\WorldController:
+        arguments:
+            $formatService: '@list_formatter'
+
+    hello_greeter:
+        class: App\Service\GreeterService
+        arguments:
+            $greet: 'Hello'
+        tags:
+            - { name: 'app.greeter_service', priority: 3 }
+
+    greetings_greeter:
+        class: App\Service\GreeterService
+        arguments:
+            $greet: 'Greetings'
+        tags:
+            - { name: 'app.greeter_service', priority: 2 }
+
+    hi_greeter:
+        class: App\Service\GreeterService
+        arguments:
+            $greet: 'Hi'
+        tags:
+            - { name: 'app.greeter_service', priority: 1 }
+
+    list_formatter:
+        class: App\Service\FormatService
+        calls:
+            - [setTag, ['ol']]
+
+    list_item_formatter:
+        class: App\Service\FormatService
+        calls:
+            - [setTag, ['li']]
+        tags: ['app.formatter_service']
