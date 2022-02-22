@@ -16,6 +16,7 @@ class GreeterPass implements CompilerPassInterface
         }
         $messageService = $container->findDefinition(MessageService::class);
         $greeterServices = $container->findTaggedServiceIds('app.greeter_service');
+        uasort($greeterServices, static fn(array $tag1, array $tag2) => $tag1[0]['priority'] - $tag2[0]['priority']);
         foreach ($greeterServices as $id => $tags) {
             $messageService->addMethodCall('addGreeter', [new Reference($id)]);
         }
