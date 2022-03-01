@@ -2,6 +2,7 @@
 
 namespace App\Manager;
 
+use App\DTO\SaveUserDTO;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -90,5 +91,17 @@ class UserManager
             ->add('isActive', CheckboxType::class, ['required' => false])
             ->add('submit', SubmitType::class)
             ->getForm();
+    }
+
+    public function saveUserFromDTO(User $user, SaveUserDTO $saveUserDTO): ?int
+    {
+        $user->setLogin($saveUserDTO->login);
+        $user->setPassword($saveUserDTO->password);
+        $user->setAge($saveUserDTO->age);
+        $user->setIsActive($saveUserDTO->isActive);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        return $user->getId();
     }
 }

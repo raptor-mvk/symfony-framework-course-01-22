@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api\v1;
 
+use App\DTO\SaveUserDTO;
 use App\Entity\User;
 use App\Event\CreateUserEvent;
 use App\Exception\DeprecatedApiException;
@@ -94,6 +95,25 @@ class UserController extends AbstractController
     public function getSaveFormAction(): Response
     {
         $form = $this->userManager->getSaveForm();
+        $content = $this->twig->render('form.twig', [
+            'form' => $form->createView(),
+        ]);
+
+        return new Response($content);
+    }
+
+    #[Route(path: '/form', methods: ['POST'])]
+    public function saveUserFormAction(Request $request): Response
+    {
+        $form = $this->userManager->getSaveForm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userId = $this->userManager->saveUserFromDTO(new User(), new SaveUserDTO($form->getData()));
+            [$data, $code] = ($userId === null) ? [['success' => false], 400] : [['id' => $userId], 200];
+
+            return new JsonResponse($data, $code);
+        }
         $content = $this->twig->render('form.twig', [
             'form' => $form->createView(),
         ]);
