@@ -120,13 +120,14 @@ class UserManager
 
         return $this->formFactory->createBuilder(FormType::class, SaveUserDTO::fromEntity($user))
             ->add('login', TextType::class)
-            ->add('password', PasswordType::class, ['required' => false])
+            ->add('password', PasswordType::class)
             ->add('age', IntegerType::class)
             ->add('isActive', CheckboxType::class, ['required' => false])
             ->add('submit', SubmitType::class)
             ->add('followers', CollectionType::class, [
                 'entry_type' => LinkedUserType::class,
                 'entry_options' => ['label' => false],
+                'allow_add' => true,
             ])
             ->setMethod('PATCH')
             ->getForm();
@@ -145,9 +146,15 @@ class UserManager
         foreach ($userDTO->followers as $followerData) {
             $followerUserDTO = new SaveUserDTO($followerData);
             /** @var User $followerUser */
-            $followerUser = $userRepository->find($followerData['id']);
-            if ($followerUser !== null) {
+            if (isset($followerData['id'])) {
+                $followerUser = $userRepository->find($followerData['id']);
+                if ($followerUser !== null) {
+                    $this->saveUserFromDTO($followerUser, $followerUserDTO);
+                }
+            } else {
+                $followerUser = new User();
                 $this->saveUserFromDTO($followerUser, $followerUserDTO);
+                $user->addFollower($followerUser);
             }
         }
 
