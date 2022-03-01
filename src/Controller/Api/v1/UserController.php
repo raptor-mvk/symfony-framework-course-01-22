@@ -143,6 +143,11 @@ class UserController extends AbstractController
             return new JsonResponse(['message' => "User with ID $id not found"], 404);
         }
 
+        /** @var SaveUserDTO $formData */
+        $formData = $form->getData();
+        $formData->followers = [];
+        $form->setData($formData);
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $result = $this->userManager->updateUserFromDTO($id, $form->getData());
