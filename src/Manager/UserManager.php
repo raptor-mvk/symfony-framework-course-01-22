@@ -4,9 +4,11 @@ namespace App\Manager;
 
 use App\DTO\SaveUserDTO;
 use App\Entity\User;
+use App\Form\LinkedUserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -118,10 +120,14 @@ class UserManager
 
         return $this->formFactory->createBuilder(FormType::class, SaveUserDTO::fromEntity($user))
             ->add('login', TextType::class)
-            ->add('password', PasswordType::class)
+            ->add('password', PasswordType::class, ['required' => false])
             ->add('age', IntegerType::class)
             ->add('isActive', CheckboxType::class, ['required' => false])
             ->add('submit', SubmitType::class)
+            ->add('followers', CollectionType::class, [
+                'entry_type' => LinkedUserType::class,
+                'entry_options' => ['label' => false],
+            ])
             ->setMethod('PATCH')
             ->getForm();
     }

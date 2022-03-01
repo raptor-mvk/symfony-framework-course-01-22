@@ -20,12 +20,16 @@ class SaveUserDTO
 
     public bool $isActive;
 
+    #[Assert\Type('array')]
+    public array $followers;
+
     public function __construct(array $data)
     {
         $this->login = $data['login'] ?? '';
         $this->password = $data['password'] ?? '';
         $this->age = $data['age'] ?? 0;
         $this->isActive = $data['isActive'] ?? false;
+        $this->followers = $data['followers'] ?? [];
     }
 
     public static function fromEntity(User $user): self
@@ -35,6 +39,18 @@ class SaveUserDTO
             'password' => $user->getPassword(),
             'age' => $user->getAge(),
             'isActive' => $user->isActive(),
+            'followers' => array_map(
+                static function (User $user) {
+                    return [
+                        'id' => $user->getId(),
+                        'login' => $user->getLogin(),
+                        'password' => $user->getPassword(),
+                        'age' => $user->getAge(),
+                        'isActive' => $user->isActive(),
+                    ];
+                },
+                $user->getFollowers()
+            ),
         ]);
     }
 }
