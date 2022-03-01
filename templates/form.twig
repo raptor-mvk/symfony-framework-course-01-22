@@ -18,10 +18,13 @@
     <h3>Followers</h3>
     <ul class="followers" data-prototype='{{ form_widget(form.followers.vars.prototype)|e('html_attr') }}'>
         {% for follower in form.followers %}
-            <li>{{ form_row(follower.login) }}</li>
-            <li>{{ form_row(follower.password) }}</li>
-            <li>{{ form_row(follower.age) }}</li>
-            <li>{{ form_row(follower.isActive) }}</li>
+            <span class="follower_form">
+                {{ form_row(follower.id) }}
+                <li>{{ form_row(follower.login) }}</li>
+                <li>{{ form_row(follower.password) }}</li>
+                <li>{{ form_row(follower.age) }}</li>
+                <li>{{ form_row(follower.isActive) }}</li>
+                </span>
         {% endfor %}
     </ul>
     {{ form_row(form.submit) }}

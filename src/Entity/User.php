@@ -209,4 +209,9 @@ class User implements HasMetaTimestampsInterface
     {
         return $this->followers->toArray();
     }
+
+    public function resetFollowers(): void
+    {
+        $this->followers = new ArrayCollection();
+    }
 }

@@ -143,6 +143,8 @@ class UserManager
             return false;
         }
 
+        $user->resetFollowers();
+
         foreach ($userDTO->followers as $followerData) {
             $followerUserDTO = new SaveUserDTO($followerData);
             /** @var User $followerUser */
@@ -154,8 +156,8 @@ class UserManager
             } else {
                 $followerUser = new User();
                 $this->saveUserFromDTO($followerUser, $followerUserDTO);
-                $user->addFollower($followerUser);
             }
+            $user->addFollower($followerUser);
         }
 
         return $this->saveUserFromDTO($user, $userDTO);
