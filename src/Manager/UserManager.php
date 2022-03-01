@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -103,5 +104,38 @@ class UserManager
         $this->entityManager->flush();
 
         return $user->getId();
+    }
+
+    public function getUpdateForm(int $userId): ?FormInterface
+    {
+        /** @var UserRepository $userRepository */
+        $userRepository = $this->entityManager->getRepository(User::class);
+        /** @var User $user */
+        $user = $userRepository->find($userId);
+        if ($user === null) {
+            return null;
+        }
+
+        return $this->formFactory->createBuilder(FormType::class, SaveUserDTO::fromEntity($user))
+            ->add('login', TextType::class)
+            ->add('password', PasswordType::class)
+            ->add('age', IntegerType::class)
+            ->add('isActive', CheckboxType::class, ['required' => false])
+            ->add('submit', SubmitType::class)
+            ->setMethod('PATCH')
+            ->getForm();
+    }
+
+    public function updateUserFromDTO(int $userId, SaveUserDTO $userDTO): bool
+    {
+        /** @var UserRepository $userRepository */
+        $userRepository = $this->entityManager->getRepository(User::class);
+        /** @var User $user */
+        $user = $userRepository->find($userId);
+        if ($user === null) {
+            return false;
+        }
+
+        return $this->saveUserFromDTO($user, $userDTO);
     }
 }
