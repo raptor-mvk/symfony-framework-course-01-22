@@ -142,6 +142,15 @@ class UserManager
             return false;
         }
 
+        foreach ($userDTO->followers as $followerData) {
+            $followerUserDTO = new SaveUserDTO($followerData);
+            /** @var User $followerUser */
+            $followerUser = $userRepository->find($followerData['id']);
+            if ($followerUser !== null) {
+                $this->saveUserFromDTO($followerUser, $followerUserDTO);
+            }
+        }
+
         return $this->saveUserFromDTO($user, $userDTO);
     }
 }
