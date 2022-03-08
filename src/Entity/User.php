@@ -8,18 +8,21 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use JsonException;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Table(name: '`user`')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class User implements HasMetaTimestampsInterface
+class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Column(name: 'id', type: 'bigint', unique:true)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 32, nullable: false)]
+    #[ORM\Column(type: 'string', length: 32, unique: true, nullable: false)]
     private string $login;
 
     #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
@@ -48,14 +51,17 @@ class User implements HasMetaTimestampsInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: 'Subscription')]
     private Collection $subscriptionFollowers;
 
-    #[ORM\Column(type: 'string', length: 32, nullable: false)]
+    #[ORM\Column(type: 'string', length: 120, nullable: false)]
     private string $password;
 
     #[ORM\Column(type: 'integer', nullable: false)]
     private int $age;
 
     #[ORM\Column(type: 'boolean', nullable: false)]
-    private string $isActive;
+    private bool $isActive;
+
+    #[ORM\Column(type: 'string', length: 1024, nullable: false)]
+    private string $roles = '{}';
 
     public function __construct()
     {
@@ -132,11 +138,16 @@ class User implements HasMetaTimestampsInterface
         $this->isActive = $isActive;
     }
 
+    /**
+     * @throws JsonException
+     */
     public function toArray(): array
     {
         return [
             'id' => $this->id,
             'login' => $this->login,
+            'password' => $this->password,
+            'roles' => $this->getRoles(),
             'createdAt' => $this->createdAt->format('Y-m-d H:i:s'),
             'updatedAt' => $this->updatedAt->format('Y-m-d H:i:s'),
             'tweets' => array_map(static fn(Tweet $tweet) => $tweet->toArray(), $this->tweets->toArray()),
@@ -150,16 +161,16 @@ class User implements HasMetaTimestampsInterface
             ),
             'subscriptionFollowers' => array_map(
                 static fn(Subscription $subscription) => [
-                    'subscriptionId' => $subscription->getId(),
-                    'userId' => $subscription->getFollower()->getId(),
+                    'subscription_id' => $subscription->getId(),
+                    'user_id' => $subscription->getFollower()->getId(),
                     'login' => $subscription->getFollower()->getLogin(),
                 ],
                 $this->subscriptionFollowers->toArray()
             ),
             'subscriptionAuthors' => array_map(
                 static fn(Subscription $subscription) => [
-                    'subscriptionId' => $subscription->getId(),
-                    'userId' => $subscription->getAuthor()->getId(),
+                    'subscription_id' => $subscription->getId(),
+                    'user_id' => $subscription->getAuthor()->getId(),
                     'login' => $subscription->getAuthor()->getLogin(),
                 ],
                 $this->subscriptionAuthors->toArray()
@@ -213,5 +224,48 @@ class User implements HasMetaTimestampsInterface
     public function resetFollowers(): void
     {
         $this->followers = new ArrayCollection();
+    }
+
+    /**
+     * @return string[]
+     *
+     * @throws JsonException
+     */
+    public function getRoles(): array
+    {
+        $roles = json_decode($this->roles, true, 512, JSON_THROW_ON_ERROR);
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    /**
+     * @param string[] $roles
+     *
+     * @throws JsonException
+     */
+    public function setRoles(array $roles): void
+    {
+        $this->roles = json_encode($roles, JSON_THROW_ON_ERROR);
+    }
+
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    public function eraseCredentials(): void
+    {
+    }
+
+    public function getUsername(): string
+    {
+        return $this->login;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->login;
     }
 }

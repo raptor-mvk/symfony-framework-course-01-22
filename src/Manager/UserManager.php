@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserManager
 {
@@ -23,10 +24,13 @@ class UserManager
 
     private FormFactoryInterface $formFactory;
 
-    public function __construct(EntityManagerInterface $entityManager, FormFactoryInterface $formFactory)
+    private UserPasswordHasherInterface $userPasswordHasher;
+
+    public function __construct(EntityManagerInterface $entityManager, FormFactoryInterface $formFactory, UserPasswordHasherInterface $userPasswordHasher)
     {
         $this->entityManager = $entityManager;
         $this->formFactory = $formFactory;
+        $this->userPasswordHasher = $userPasswordHasher;
     }
 
     public function saveUser(string $login): ?int
@@ -99,9 +103,10 @@ class UserManager
     public function saveUserFromDTO(User $user, SaveUserDTO $saveUserDTO): ?int
     {
         $user->setLogin($saveUserDTO->login);
-        $user->setPassword($saveUserDTO->password);
+        $user->setPassword($this->userPasswordHasher->hashPassword($user, $saveUserDTO->password));
         $user->setAge($saveUserDTO->age);
         $user->setIsActive($saveUserDTO->isActive);
+        $user->setRoles($saveUserDTO->roles);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
