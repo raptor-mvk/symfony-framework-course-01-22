@@ -58,13 +58,14 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
     private string $password;
 
     #[ORM\Column(type: 'integer', nullable: false)]
-    #[JMS\Type('string')]
+    #[JMS\Type('int')]
     #[JMS\Groups(['user1'])]
     private int $age;
 
     #[ORM\Column(type: 'boolean', nullable: false)]
-    #[JMS\Type('int')]
+    #[JMS\Type('bool')]
     #[JMS\Groups(['user1'])]
+    #[JMS\SerializedName('isActive')]
     private bool $isActive;
 
     #[ORM\Column(type: 'string', length: 1024, nullable: false)]
