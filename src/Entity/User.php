@@ -24,6 +24,7 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
     private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 32, unique: true, nullable: false)]
+    #[JMS\Groups(['user1'])]
     private string $login;
 
     #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
@@ -57,10 +58,12 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
 
     #[ORM\Column(type: 'integer', nullable: false)]
     #[JMS\Type('string')]
+    #[JMS\Groups(['user1'])]
     private int $age;
 
     #[ORM\Column(type: 'boolean', nullable: false)]
     #[JMS\Type('int')]
+    #[JMS\Groups(['user1'])]
     private bool $isActive;
 
     #[ORM\Column(type: 'string', length: 1024, nullable: false)]
