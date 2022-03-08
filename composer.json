@@ -16,9 +16,11 @@
         "symfony/dotenv": "5.4.*",
         "symfony/expression-language": "5.4.*",
         "symfony/flex": "^1.17|^2",
+        "symfony/form": "5.4.*",
         "symfony/framework-bundle": "5.4.*",
         "symfony/runtime": "5.4.*",
         "symfony/twig-bundle": "5.4.*",
+        "symfony/validator": "5.4.*",
         "symfony/webpack-encore-bundle": "^1.13",
         "symfony/yaml": "5.4.*"
     },
