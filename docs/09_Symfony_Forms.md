@@ -16,7 +16,7 @@
     private int $age;
 
     #[ORM\Column(type: 'boolean', nullable: false)]
-    private string $isActive;
+    private bool $isActive;
 
     public function getPassword(): string
     {

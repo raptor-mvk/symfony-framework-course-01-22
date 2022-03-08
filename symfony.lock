@@ -89,6 +89,9 @@
     "laminas/laminas-code": {
         "version": "4.5.1"
     },
+    "nikic/php-parser": {
+        "version": "v4.13.2"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -219,7 +222,19 @@
     "symfony/http-kernel": {
         "version": "v5.4.4"
     },
+    "symfony/maker-bundle": {
+        "version": "1.38",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
+        }
+    },
     "symfony/options-resolver": {
+        "version": "v5.4.3"
+    },
+    "symfony/password-hasher": {
         "version": "v5.4.3"
     },
     "symfony/polyfill-intl-grapheme": {
@@ -264,6 +279,30 @@
     },
     "symfony/runtime": {
         "version": "v5.4.3"
+    },
+    "symfony/security-bundle": {
+        "version": "5.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "5.3",
+            "ref": "98f1f2b0d635908c2b40f3675da2d23b1a069d30"
+        },
+        "files": [
+            "config/packages/security.yaml"
+        ]
+    },
+    "symfony/security-core": {
+        "version": "v5.4.5"
+    },
+    "symfony/security-csrf": {
+        "version": "v5.4.3"
+    },
+    "symfony/security-guard": {
+        "version": "v5.4.3"
+    },
+    "symfony/security-http": {
+        "version": "v5.4.5"
     },
     "symfony/service-contracts": {
         "version": "v2.5.0"
