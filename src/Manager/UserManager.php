@@ -167,4 +167,12 @@ class UserManager
 
         return $this->saveUserFromDTO($user, $userDTO);
     }
+
+    public function findUserById(int $userId): ?User
+    {
+        /** @var UserRepository $userRepository */
+        $userRepository = $this->entityManager->getRepository(User::class);
+
+        return $userRepository->find($userId);
+    }
 }

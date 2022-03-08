@@ -5,20 +5,25 @@ namespace App\Controller\Api\v3;
 use App\DTO\SaveUserDTO;
 use App\Entity\User;
 use App\Manager\UserManager;
+use App\Security\Voter\UserVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 #[Route(path: 'api/v3/user')]
 class UserController extends AbstractController
 {
     private UserManager $userManager;
 
-    public function __construct(UserManager $userManager)
+    private AuthorizationCheckerInterface $authorizationChecker;
+
+    public function __construct(UserManager $userManager, AuthorizationCheckerInterface $authorizationChecker)
     {
         $this->userManager = $userManager;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     #[Route(path: '', methods: ['POST'])]
@@ -48,6 +53,10 @@ class UserController extends AbstractController
     public function deleteUserAction(Request $request): Response
     {
         $userId = $request->query->get('userId');
+        $user = $this->userManager->findUserById($userId);
+        if (!$this->authorizationChecker->isGranted(UserVoter::DELETE, $user)) {
+            return new JsonResponse('Access denied', Response::HTTP_FORBIDDEN);
+        }
         $result = $this->userManager->deleteUserById($userId);
 
         return new JsonResponse(['success' => $result], $result ? Response::HTTP_OK : Response::HTTP_NOT_FOUND);
