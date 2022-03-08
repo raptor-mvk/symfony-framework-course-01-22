@@ -28,6 +28,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/api/v3/user, roles: ROLE_ADMIN, methods: [DELETE] }
+        - { path: ^/api/v3/user, roles: ROLE_VIEW, methods: [GET] }
 
 when@test:
     security:
