@@ -25,7 +25,7 @@ class Controller extends AbstractFOSRestController
         $page = $request->request->get('page');
         $users = $this->userManager->getUsers($page ?? 0, $perPage ?? 20);
         $code = empty($users) ? Response::HTTP_NO_CONTENT : Response::HTTP_OK;
-        $context = (new Context())->setGroups(['user1']);
+        $context = (new Context())->setGroups(['user1', 'user2']);
         $view = $this->view(['users' => $users], $code)->setContext($context);
 
         return $this->handleView($view);

@@ -21,6 +21,7 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
     #[ORM\Column(name: 'id', type: 'bigint', unique:true)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[JMS\Groups(['user2'])]
     private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 32, unique: true, nullable: false)]
