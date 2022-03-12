@@ -17,7 +17,7 @@
         ```
     2. В секции `firewalls.main` заменяем `provider: users_in_memory` на `provider: app_user_provider`
 4. В классе `App\Entity\User`
-    1. исправляем аннотации к полям `$login` и `$password`
+    1. исправляем атрибуты полей `$login` и `$password`
         ```php
         #[ORM\Column(type: 'string', length: 32, unique: true, nullable: false)]
         private string $login;
