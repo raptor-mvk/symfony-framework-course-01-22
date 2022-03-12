@@ -12,6 +12,7 @@
         "doctrine/orm": "^2.11",
         "friendsofsymfony/rest-bundle": "^3.3",
         "jms/serializer-bundle": "^4.0",
+        "lexik/jwt-authentication-bundle": "^2.14",
         "sensio/framework-extra-bundle": "^6.2",
         "stof/doctrine-extensions-bundle": "^1.7",
         "symfony/console": "5.4.*",

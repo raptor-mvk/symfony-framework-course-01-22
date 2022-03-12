@@ -13,10 +13,14 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        token:
+            pattern: ^/api/v1/token
+            security: false
         main:
             lazy: true
             provider: app_user_provider
-            custom_authenticator: App\Security\AppLoginAuthenticator
+            stateless: true
+            custom_authenticator: App\Security\JWTTokenAuthenticator
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

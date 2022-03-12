@@ -24,7 +24,7 @@ class Controller extends AbstractFOSRestController
     #[RequestParam(name: 'password')]
     #[RequestParam(name: 'roles')]
     #[RequestParam(name: 'age', requirements: '\d+')]
-    #[RequestParam(name: 'login', requirements: 'true|false')]
+    #[RequestParam(name: 'isActive', requirements: 'true|false')]
     public function saveUserAction(string $login, string $password, string $roles, string $age, string $isActive): Response
     {
         $userDTO = new SaveUserDTO([
