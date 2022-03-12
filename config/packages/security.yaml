@@ -20,7 +20,7 @@ security:
             lazy: true
             provider: app_user_provider
             stateless: true
-            custom_authenticator: App\Security\ApiTokenAuthenticator
+            custom_authenticator: App\Security\JWTTokenAuthenticator
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
