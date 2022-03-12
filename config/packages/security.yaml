@@ -13,6 +13,9 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        token:
+            pattern: ^/api/v1/token
+            security: false
         main:
             lazy: true
             provider: app_user_provider
