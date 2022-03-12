@@ -36,7 +36,13 @@ class AuthService
 
     public function getToken(string $login): string
     {
-        $tokenData = ['username' => $login, 'exp' => time() + $this->tokenTTL];
+        $user = $this->userManager->findUserByLogin($login);
+        $roles = $user ? $user->getRoles() : [];
+        $tokenData = [
+            'username' => $login,
+            'roles' => $roles,
+            'exp' => time() + $this->tokenTTL,
+        ];
 
         return $this->jwtEncoder->encode($tokenData);
     }
