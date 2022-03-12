@@ -198,4 +198,14 @@ class UserManager
 
         return $token;
     }
+
+    public function findUserByToken(string $token): ?User
+    {
+        /** @var UserRepository $userRepository */
+        $userRepository = $this->entityManager->getRepository(User::class);
+        /** @var User|null $user */
+        $user = $userRepository->findOneBy(['token' => $token]);
+
+        return $user;
+    }
 }
