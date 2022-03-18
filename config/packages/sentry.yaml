@@ -10,3 +10,7 @@ services:
             $options:
                 ignore_exceptions:
                     - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+    Sentry\Monolog\Handler:
+        arguments:
+            $hub: '@Sentry\State\HubInterface'
+            $level: !php/const Monolog\Logger::ERROR
