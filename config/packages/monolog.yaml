@@ -6,10 +6,14 @@ when@dev:
     monolog:
         handlers:
             main:
+                type: fingers_crossed
+                action_level: error
+                handler: nested
+                buffer_size: 3
+            nested:
                 type: stream
                 path: "%kernel.logs_dir%/%kernel.environment%.log"
-                level: critical
-                channels: ["!event"]
+                level: debug
             # uncomment to get logging in your browser
             # you may have to allow bigger header sizes in your Web server configuration
             #firephp:
