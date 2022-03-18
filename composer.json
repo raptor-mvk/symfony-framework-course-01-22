@@ -16,6 +16,7 @@
         "nyholm/psr7": "^1.5",
         "sensio/framework-extra-bundle": "^6.2",
         "sentry/sentry-symfony": "^4.2",
+        "slickdeals/statsd": "^3.1",
         "stof/doctrine-extensions-bundle": "^1.7",
         "symfony/console": "5.4.*",
         "symfony/dotenv": "5.4.*",

@@ -93,6 +93,26 @@ services:
       SENTRY_DB_PASSWORD: sentry
       SENTRY_REDIS_HOST: redis
 
+  graphite:
+    image: graphiteapp/graphite-statsd
+    container_name: 'graphite'
+    restart: always
+    ports:
+      - 8000:80
+      - 2003:2003
+      - 2004:2004
+      - 2023:2023
+      - 2024:2024
+      - 8125:8125/udp
+      - 8126:8126
+
+  grafana:
+    image: grafana/grafana
+    container_name: 'grafana'
+    restart: always
+    ports:
+      - 3000:3000
+
 volumes:
   dump:
   postgresql:

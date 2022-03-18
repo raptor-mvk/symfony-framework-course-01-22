@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api\SaveUser\v5;
 
+use App\Client\StatsdAPIClient;
 use App\Controller\Api\SaveUser\v5\Input\SaveUserDTO;
 use App\Controller\Api\SaveUser\v5\Output\UserIsSavedDTO;
 use App\Entity\User;
@@ -18,15 +19,19 @@ class SaveUserManager
 
     private LoggerInterface $logger;
 
-    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer, LoggerInterface $logger)
+    private StatsdAPIClient $statsdAPIClient;
+
+    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer, LoggerInterface $logger, StatsdAPIClient $statsdAPIClient)
     {
         $this->entityManager = $entityManager;
         $this->serializer = $serializer;
         $this->logger = $logger;
+        $this->statsdAPIClient = $statsdAPIClient;
     }
 
     public function saveUser(SaveUserDTO $saveUserDTO): UserIsSavedDTO
     {
+        $this->statsdAPIClient->increment('save_user_v5_attempt');
         $this->logger->debug('This is debug message');
         $this->logger->info('This is info message');
         $this->logger->notice('This is notice message');

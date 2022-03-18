@@ -91,3 +91,9 @@ services:
         class: Monolog\Formatter\LineFormatter
         arguments:
             - "[%%level_name%%]: [%%datetime%%] %%message%%\n"
+
+    App\Client\StatsdAPIClient:
+        arguments:
+            - graphite
+            - 8125
+            - my_app
