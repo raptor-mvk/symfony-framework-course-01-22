@@ -86,3 +86,8 @@ services:
     App\Service\AuthService:
         arguments:
             $tokenTTL: '%env(JWT_TTL_SEC)%'
+
+    monolog.formatter.app_formatter:
+        class: Monolog\Formatter\LineFormatter
+        arguments:
+            - "[%%level_name%%]: [%%datetime%%] %%message%%\n"
