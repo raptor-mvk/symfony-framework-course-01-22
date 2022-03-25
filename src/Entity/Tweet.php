@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TweetRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Table(name: 'tweet')]
 #[ORM\Entity(repositoryClass: TweetRepository::class)]
@@ -24,9 +25,11 @@ class Tweet
     private string $text;
 
     #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
+    #[Gedmo\Timestampable(on: 'create')]
     private DateTime $createdAt;
 
     #[ORM\Column(name: 'updated_at', type: 'datetime', nullable: false)]
+    #[Gedmo\Timestampable(on: 'update')]
     private DateTime $updatedAt;
 
     public function getId(): int
