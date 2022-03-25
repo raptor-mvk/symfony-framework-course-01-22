@@ -11,6 +11,7 @@ use JsonException;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Throwable;
 
 class Consumer implements ConsumerInterface
 {
@@ -39,18 +40,21 @@ class Consumer implements ConsumerInterface
             return $this->reject($e->getMessage());
         }
 
-        $userRepository = $this->entityManager->getRepository(User::class);
-        $user = $userRepository->find($message->getUserId());
-        if (!($user instanceof User)) {
-            return $this->reject(sprintf('User ID %s was not found', $message->getUserId()));
+        try {
+            $userRepository = $this->entityManager->getRepository(User::class);
+            $user = $userRepository->find($message->getUserId());
+            if (!($user instanceof User)) {
+                return $this->reject(sprintf('User ID %s was not found', $message->getUserId()));
+            }
+
+            $this->subscriptionService->addFollowers($user, $message->getFollowerLogin(), $message->getCount());
+            throw new Exception('Something happens');
+
+            $this->entityManager->clear();
+            $this->entityManager->getConnection()->close();
+        } catch (Throwable $e) {
+            $this->reject($e->getMessage());
         }
-
-        $this->subscriptionService->addFollowers($user, $message->getFollowerLogin(), $message->getCount());
-
-        $this->entityManager->clear();
-        $this->entityManager->getConnection()->close();
-
-        throw new Exception('Something happens');
 
         return self::MSG_ACK;
     }
