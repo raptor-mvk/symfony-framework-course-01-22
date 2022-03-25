@@ -19,6 +19,6 @@ class TweetRepository extends EntityRepository
             ->setFirstResult($perPage * $page)
             ->setMaxResults($perPage);
 
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->enableResultCache(null, "tweets_{$page}_{$perPage}")->getResult();
     }
 }
