@@ -427,7 +427,7 @@
         ```yaml
         $cache: '@redis_adapter'
         ```
-2. В классе `App\Entity\Tweet` исправляем аннотации для полей `createdAt` и `updatedAt`
+2. В классе `App\Entity\Tweet` исправляем атрибуты для полей `createdAt` и `updatedAt`
     ```php
     #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
     #[Gedmo\Timestampable(on: 'create')]
