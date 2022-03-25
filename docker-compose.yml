@@ -36,7 +36,84 @@ services:
       - dump:/app/dump
       - postgresql:/var/lib/postgresql/data
 
+  redis:
+    container_name: 'redis'
+    image: redis
+
+  sentry-postgres:
+    image: postgres
+    container_name: 'sentry-postgres'
+    environment:
+      POSTGRES_USER: sentry
+      POSTGRES_PASSWORD: sentry
+      POSTGRES_DB: sentry
+    volumes:
+      - sentry-pgdb:/var/lib/postgresql/data
+
+  sentry:
+    image: sentry
+    container_name: 'sentry'
+    links:
+      - redis
+      - sentry-postgres
+    ports:
+      - 10000:9000
+    environment:
+      SENTRY_SECRET_KEY: '&1k8n7lr_p9q5fd_5*kde9*p)&scu%pqi*3*rflw+b%mprdob)'
+      SENTRY_POSTGRES_HOST: sentry-postgres
+      SENTRY_DB_USER: sentry
+      SENTRY_DB_PASSWORD: sentry
+      SENTRY_REDIS_HOST: redis
+
+  cron:
+    image: sentry
+    container_name: 'sentry-cron'
+    links:
+      - redis
+      - sentry-postgres
+    command: "sentry run cron"
+    environment:
+      SENTRY_SECRET_KEY: '&1k8n7lr_p9q5fd_5*kde9*p)&scu%pqi*3*rflw+b%mprdob)'
+      SENTRY_POSTGRES_HOST: sentry-postgres
+      SENTRY_DB_USER: sentry
+      SENTRY_DB_PASSWORD: sentry
+      SENTRY_REDIS_HOST: redis
+
+  worker:
+    image: sentry
+    container_name: 'sentry-worker'
+    links:
+      - redis
+      - sentry-postgres
+    command: "sentry run worker"
+    environment:
+      SENTRY_SECRET_KEY: '&1k8n7lr_p9q5fd_5*kde9*p)&scu%pqi*3*rflw+b%mprdob)'
+      SENTRY_POSTGRES_HOST: sentry-postgres
+      SENTRY_DB_USER: sentry
+      SENTRY_DB_PASSWORD: sentry
+      SENTRY_REDIS_HOST: redis
+
+  graphite:
+    image: graphiteapp/graphite-statsd
+    container_name: 'graphite'
+    restart: always
+    ports:
+      - 8000:80
+      - 2003:2003
+      - 2004:2004
+      - 2023:2023
+      - 2024:2024
+      - 8125:8125/udp
+      - 8126:8126
+
+  grafana:
+    image: grafana/grafana
+    container_name: 'grafana'
+    restart: always
+    ports:
+      - 3000:3000
+
 volumes:
   dump:
   postgresql:
-
+  sentry-pgdb:

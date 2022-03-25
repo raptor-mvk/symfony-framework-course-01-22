@@ -20,6 +20,7 @@ security:
             lazy: true
             provider: app_user_provider
             stateless: true
+            security: false
             custom_authenticator: App\Security\JWTTokenAuthenticator
 
             # activate different ways to authenticate

@@ -2,6 +2,9 @@
     "behat/transliterator": {
         "version": "v1.3.0"
     },
+    "clue/stream-filter": {
+        "version": "v1.6.0"
+    },
     "doctrine/annotations": {
         "version": "1.13",
         "recipe": {
@@ -98,6 +101,18 @@
     "gedmo/doctrine-extensions": {
         "version": "v3.5.0"
     },
+    "guzzlehttp/promises": {
+        "version": "1.5.1"
+    },
+    "guzzlehttp/psr7": {
+        "version": "2.1.0"
+    },
+    "http-interop/http-factory-guzzle": {
+        "version": "1.2.0"
+    },
+    "jean85/pretty-package-versions": {
+        "version": "2.0.5"
+    },
     "jms/metadata": {
         "version": "2.6.1"
     },
@@ -139,11 +154,44 @@
             "config/packages/lexik_jwt_authentication.yaml"
         ]
     },
+    "monolog/monolog": {
+        "version": "2.4.0"
+    },
     "namshi/jose": {
         "version": "7.2.3"
     },
     "nikic/php-parser": {
         "version": "v4.13.2"
+    },
+    "nyholm/psr7": {
+        "version": "1.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "0cd4d2d0e7f646fda75f9944f747a56e6ed13d4c"
+        },
+        "files": [
+            "config/packages/nyholm_psr7.yaml"
+        ]
+    },
+    "php-http/client-common": {
+        "version": "2.5.0"
+    },
+    "php-http/discovery": {
+        "version": "1.14.1"
+    },
+    "php-http/httplug": {
+        "version": "2.3.0"
+    },
+    "php-http/message": {
+        "version": "1.13.0"
+    },
+    "php-http/message-factory": {
+        "version": "v1.0.2"
+    },
+    "php-http/promise": {
+        "version": "1.1.0"
     },
     "phpstan/phpdoc-parser": {
         "version": "1.2.0"
@@ -157,8 +205,20 @@
     "psr/event-dispatcher": {
         "version": "1.0.0"
     },
+    "psr/http-client": {
+        "version": "1.0.1"
+    },
+    "psr/http-factory": {
+        "version": "1.0.1"
+    },
+    "psr/http-message": {
+        "version": "1.0.1"
+    },
     "psr/log": {
         "version": "1.1.4"
+    },
+    "ralouphie/getallheaders": {
+        "version": "3.0.3"
     },
     "sensio/framework-extra-bundle": {
         "version": "6.2",
@@ -171,6 +231,27 @@
         "files": [
             "config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "sentry/sdk": {
+        "version": "3.1.1"
+    },
+    "sentry/sentry": {
+        "version": "3.4.0"
+    },
+    "sentry/sentry-symfony": {
+        "version": "4.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "9746f0823302d7980e5273ef7a69ef3f5ac80914"
+        },
+        "files": [
+            "config/packages/sentry.yaml"
+        ]
+    },
+    "slickdeals/statsd": {
+        "version": "3.1.0"
     },
     "stof/doctrine-extensions-bundle": {
         "version": "1.7",
@@ -272,6 +353,12 @@
             "./src/Kernel.php"
         ]
     },
+    "symfony/http-client": {
+        "version": "v5.4.5"
+    },
+    "symfony/http-client-contracts": {
+        "version": "v2.5.0"
+    },
     "symfony/http-foundation": {
         "version": "v5.4.3"
     },
@@ -286,6 +373,21 @@
             "version": "1.0",
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
+    },
+    "symfony/monolog-bridge": {
+        "version": "v5.4.3"
+    },
+    "symfony/monolog-bundle": {
+        "version": "3.7",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.7",
+            "ref": "213676c4ec929f046dfde5ea8e97625b81bc0578"
+        },
+        "files": [
+            "config/packages/monolog.yaml"
+        ]
     },
     "symfony/options-resolver": {
         "version": "v5.4.3"
@@ -317,11 +419,17 @@
     "symfony/polyfill-php81": {
         "version": "v1.24.0"
     },
+    "symfony/polyfill-uuid": {
+        "version": "v1.25.0"
+    },
     "symfony/property-access": {
         "version": "v5.4.5"
     },
     "symfony/property-info": {
         "version": "v5.4.3"
+    },
+    "symfony/psr-http-message-bridge": {
+        "version": "v2.1.2"
     },
     "symfony/routing": {
         "version": "5.4",
