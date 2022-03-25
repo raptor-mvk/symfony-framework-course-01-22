@@ -40,21 +40,20 @@ class Consumer implements ConsumerInterface
             return $this->reject($e->getMessage());
         }
 
-        try {
-            $userRepository = $this->entityManager->getRepository(User::class);
-            $user = $userRepository->find($message->getUserId());
-            if (!($user instanceof User)) {
-                return $this->reject(sprintf('User ID %s was not found', $message->getUserId()));
-            }
-
-            $this->subscriptionService->addFollowers($user, $message->getFollowerLogin(), $message->getCount());
-            sleep(1);
-
-            $this->entityManager->clear();
-            $this->entityManager->getConnection()->close();
-        } catch (Throwable $e) {
-            $this->reject($e->getMessage());
+        $userRepository = $this->entityManager->getRepository(User::class);
+        $user = $userRepository->find($message->getUserId());
+        if (!($user instanceof User)) {
+            return $this->reject(sprintf('User ID %s was not found', $message->getUserId()));
         }
+
+        if ($message->getFollowerLogin() === 'multi_follower_error2 #11') {
+            throw new Exception('Planned error');
+        }
+        $this->subscriptionService->addFollowers($user, $message->getFollowerLogin(), $message->getCount());
+        sleep(1);
+
+        $this->entityManager->clear();
+        $this->entityManager->getConnection()->close();
 
         return self::MSG_ACK;
     }
