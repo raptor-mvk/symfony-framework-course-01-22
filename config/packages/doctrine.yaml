@@ -16,6 +16,28 @@ doctrine:
                 prefix: 'App\Entity'
                 alias: App
                 type: attribute
+        metadata_cache_driver:
+            type: service
+            id: doctrine.cache.memcached
+        query_cache_driver:
+            type: service
+            id: doctrine.cache.memcached
+        result_cache_driver:
+            type: service
+            id: doctrine.cache.memcached
+
+services:
+    memcached.doctrine:
+        class: Memcached
+        factory: Symfony\Component\Cache\Adapter\MemcachedAdapter::createConnection
+        arguments:
+            - '%env(MEMCACHED_DSN)%'
+            - PREFIX_KEY: 'my_app_doctrine'
+
+    doctrine.cache.memcached:
+        class: Doctrine\Common\Cache\MemcachedCache
+        calls:
+            - ['setMemcached', ['@memcached.doctrine']]
 
 when@test:
     doctrine:
