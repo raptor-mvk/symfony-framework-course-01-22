@@ -47,11 +47,8 @@ class Consumer implements ConsumerInterface
                 return $this->reject(sprintf('User ID %s was not found', $message->getUserId()));
             }
 
-            if ($message->getCount() === 5) {
-                sleep(1000);
-            }
-
             $this->subscriptionService->addFollowers($user, $message->getFollowerLogin(), $message->getCount());
+            sleep(1);
 
             $this->entityManager->clear();
             $this->entityManager->getConnection()->close();

@@ -2,10 +2,12 @@
 
 namespace App\Service;
 
+use App\DTO\AddFollowersDTO;
 use App\DTO\SaveUserDTO;
 use App\Entity\User;
 use App\Manager\SubscriptionManager;
 use App\Manager\UserManager;
+use JsonException;
 
 class SubscriptionService
 {
@@ -52,5 +54,20 @@ class SubscriptionService
         }
 
         return $createdFollowers;
+    }
+
+    /**
+     * @return string[]
+     *
+     * @throws JsonException
+     */
+    public function getFollowersMessages(User $user, string $followerLogin, int $count): array
+    {
+        $result = [];
+        for ($i = 0; $i < $count; $i++) {
+            $result[] = (new AddFollowersDTO($user->getId(), "$followerLogin #$i", 1))->toAMQPMessage();
+        }
+
+        return $result;
     }
 }

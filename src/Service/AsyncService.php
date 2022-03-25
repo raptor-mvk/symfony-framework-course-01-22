@@ -31,4 +31,19 @@ class AsyncService
 
         return false;
     }
+
+    public function publishMultipleToExchange(string $producerName, array $messages, ?string $routingKey = null, ?array $additionalProperties = null): int
+    {
+        $sentCount = 0;
+        if (isset($this->producers[$producerName])) {
+            foreach ($messages as $message) {
+                $this->producers[$producerName]->publish($message, $routingKey ?? '', $additionalProperties ?? []);
+                $sentCount++;
+            }
+
+            return $sentCount;
+        }
+
+        return $sentCount;
+    }
 }
