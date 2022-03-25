@@ -18,16 +18,14 @@ class Controller extends AbstractFOSRestController
         $this->tweetManager = $tweetManager;
     }
 
-    /**
-     * @Rest\Get("/api/v1/tweet")
-     */
+    #[Rest\Get(path: '/api/v1/tweet')]
     public function getTweetsAction(Request $request): Response
     {
         $perPage = $request->query->get('perPage');
         $page = $request->query->get('page');
         $tweets = $this->tweetManager->getTweets($page ?? 0, $perPage ?? 20);
         $code = empty($tweets) ? 204 : 200;
-        $view = $this->view(['tweets' => array_map(static fn(Tweet $tweet) => $tweet->toArray(), $tweets)], $code);
+        $view = $this->view(['tweets' => $tweets], $code);
 
         return $this->handleView($view);
     }
