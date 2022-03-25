@@ -6,6 +6,7 @@ use App\Consumer\AddFollowers\Input\Message;
 use App\Entity\User;
 use App\Service\SubscriptionService;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use JsonException;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -48,6 +49,8 @@ class Consumer implements ConsumerInterface
 
         $this->entityManager->clear();
         $this->entityManager->getConnection()->close();
+
+        throw new Exception('Something happens');
 
         return self::MSG_ACK;
     }
