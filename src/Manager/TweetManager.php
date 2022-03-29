@@ -63,19 +63,20 @@ class TweetManager
     /**
      * @throws \Psr\Cache\InvalidArgumentException
      */
-    public function saveTweet(int $authorId, string $text): bool {
+    public function saveTweet(int $authorId, string $text): ?Tweet {
         $tweet = new Tweet();
         $userRepository = $this->entityManager->getRepository(User::class);
         $author = $userRepository->find($authorId);
         if (!($author instanceof User)) {
-            return false;
+            return null;
         }
         $tweet->setAuthor($author);
         $tweet->setText($text);
         $this->entityManager->persist($tweet);
         $this->entityManager->flush();
+
         $this->cache->invalidateTags([self::CACHE_TAG]);
 
-        return true;
+        return $tweet;
     }
 }

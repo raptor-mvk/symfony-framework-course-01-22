@@ -107,6 +107,9 @@ class UserManager
         $user->setAge($saveUserDTO->age);
         $user->setIsActive($saveUserDTO->isActive);
         $user->setRoles($saveUserDTO->roles);
+        $user->setPhone($saveUserDTO->phone);
+        $user->setEmail($saveUserDTO->email);
+        $user->setPreferred($saveUserDTO->preferred);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 

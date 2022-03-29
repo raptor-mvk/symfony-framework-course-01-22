@@ -28,6 +28,12 @@ class SaveUserDTO
     /** @var string[] */
     public array $roles;
 
+    public ?string $phone;
+
+    public ?string $email;
+
+    public ?string $preferred;
+
     public function __construct(array $data)
     {
         $this->login = $data['login'] ?? '';
@@ -36,6 +42,9 @@ class SaveUserDTO
         $this->isActive = $data['isActive'] ?? false;
         $this->followers = $data['followers'] ?? [];
         $this->roles = $data['roles'] ?? [];
+        $this->phone = $data['phone'] ?? '';
+        $this->email = $data['email'] ?? '';
+        $this->preferred = $data['preferred'] ?? '';
     }
 
     public static function fromEntity(User $user): self
@@ -58,6 +67,9 @@ class SaveUserDTO
                 },
                 $user->getFollowers()
             ),
+            'phone' => $user->getPhone(),
+            'email' => $user->getEmail(),
+            'preferred' => $user->getPreferred(),
         ]);
     }
 
