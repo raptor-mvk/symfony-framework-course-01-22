@@ -2,6 +2,7 @@
 
 namespace App\Consumer\UpdateFeed;
 
+use App\Client\StatsdAPIClient;
 use App\Consumer\UpdateFeed\Input\Message;
 use App\DTO\SendNotificationDTO;
 use App\Entity\Tweet;
@@ -24,12 +25,18 @@ class Consumer implements ConsumerInterface
 
     private AsyncService $asyncService;
 
-    public function __construct(EntityManagerInterface $entityManager, ValidatorInterface $validator, FeedService $feedService, AsyncService $asyncService)
+    private StatsdAPIClient $statsdAPIClient;
+
+    private string $key;
+
+    public function __construct(EntityManagerInterface $entityManager, ValidatorInterface $validator, FeedService $feedService, AsyncService $asyncService, StatsdAPIClient $statsdAPIClient, string $key)
     {
         $this->entityManager = $entityManager;
         $this->validator = $validator;
         $this->feedService = $feedService;
         $this->asyncService = $asyncService;
+        $this->statsdAPIClient = $statsdAPIClient;
+        $this->key = $key;
     }
 
     public function execute(AMQPMessage $msg): int
@@ -63,6 +70,7 @@ class Consumer implements ConsumerInterface
             );
         }
 
+        $this->statsdAPIClient->increment($this->key);
         $this->entityManager->clear();
         $this->entityManager->getConnection()->close();
 
