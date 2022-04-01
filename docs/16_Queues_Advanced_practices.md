@@ -250,13 +250,13 @@
     1. добавляем новые поля `phone`, `email`, `preferred` и геттеры и сеттеры для них
         ```php
         #[ORM\Column(type: 'string', length: 11, nullable: true)]
-        private ?string $phone;
+        private ?string $phone = null;
 
         #[ORM\Column(type: 'string', length: 128, nullable: true)]
-        private ?string $email;
+        private ?string $email = null;
  
         #[ORM\Column(type: 'string', length: 10, nullable: true)]
-        private ?string $preferred;
+        private ?string $preferred = null;
 
         public function getPhone(): ?string
         {

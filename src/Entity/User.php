@@ -80,17 +80,17 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
     #[ORM\Column(type: 'string', length: 11, nullable: true)]
     #[JMS\Type('string')]
     #[JMS\Groups(['elastica'])]
-    private ?string $phone;
+    private ?string $phone = null;
 
     #[ORM\Column(type: 'string', length: 128, nullable: true)]
     #[JMS\Type('string')]
     #[JMS\Groups(['elastica'])]
-    private ?string $email;
+    private ?string $email = null;
 
     #[ORM\Column(type: 'string', length: 10, nullable: true)]
     #[JMS\Type('string')]
     #[JMS\Groups(['elastica'])]
-    private ?string $preferred;
+    private ?string $preferred = null;
 
     public function __construct()
     {
