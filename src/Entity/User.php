@@ -75,7 +75,7 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
     private string $roles = '{}';
 
     #[ORM\Column(type: 'string', length: 32, unique: true, nullable: true)]
-    private string $token;
+    private ?string $token = null;
 
     #[ORM\Column(type: 'string', length: 11, nullable: true)]
     #[JMS\Type('string')]
@@ -298,12 +298,12 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
         return $this->login;
     }
 
-    public function getToken(): string
+    public function getToken(): ?string
     {
         return $this->token;
     }
 
-    public function setToken(string $token): void
+    public function setToken(?string $token): void
     {
         $this->token = $token;
     }
