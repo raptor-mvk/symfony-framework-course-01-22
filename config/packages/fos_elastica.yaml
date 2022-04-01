@@ -15,6 +15,9 @@ fos_elastica:
                     delete: true
             serializer:
                 groups: [elastica]
+            properties:
+                preferred:
+                    fielddata: true
         tweet:
             persistence:
                 driver: orm
