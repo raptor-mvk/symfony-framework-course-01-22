@@ -28,7 +28,7 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
     private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 32, unique: true, nullable: false)]
-    #[JMS\Groups(['user1'])]
+    #[JMS\Groups(['user1', 'elastica'])]
     private string $login;
 
     #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
@@ -62,7 +62,7 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
 
     #[ORM\Column(type: 'integer', nullable: false)]
     #[JMS\Type('int')]
-    #[JMS\Groups(['user1'])]
+    #[JMS\Groups(['user1', 'elastica'])]
     private int $age;
 
     #[ORM\Column(type: 'boolean', nullable: false)]
@@ -78,12 +78,18 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
     private string $token;
 
     #[ORM\Column(type: 'string', length: 11, nullable: true)]
+    #[JMS\Type('string')]
+    #[JMS\Groups(['elastica'])]
     private ?string $phone;
 
     #[ORM\Column(type: 'string', length: 128, nullable: true)]
+    #[JMS\Type('string')]
+    #[JMS\Groups(['elastica'])]
     private ?string $email;
 
     #[ORM\Column(type: 'string', length: 10, nullable: true)]
+    #[JMS\Type('string')]
+    #[JMS\Groups(['elastica'])]
     private ?string $preferred;
 
     public function __construct()

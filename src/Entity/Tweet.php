@@ -6,6 +6,7 @@ use App\Repository\TweetRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use JMS\Serializer\Annotation as JMS;
 use JsonException;
 
 #[ORM\Table(name: 'tweet')]
@@ -20,9 +21,11 @@ class Tweet
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'tweets')]
     #[ORM\JoinColumn(name: 'author_id', referencedColumnName: 'id')]
+    #[JMS\Groups(['elastica'])]
     private User $author;
 
     #[ORM\Column(type: 'string', length: 140, nullable: false)]
+    #[JMS\Groups(['elastica'])]
     private string $text;
 
     #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
