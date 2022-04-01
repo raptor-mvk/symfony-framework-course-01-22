@@ -21,25 +21,16 @@ class SaveUserManager
 
     private StatsdAPIClient $statsdAPIClient;
 
-    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer, LoggerInterface $logger, StatsdAPIClient $statsdAPIClient)
+    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer, LoggerInterface $elasticsearchLogger, StatsdAPIClient $statsdAPIClient)
     {
         $this->entityManager = $entityManager;
         $this->serializer = $serializer;
-        $this->logger = $logger;
+        $this->logger = $elasticsearchLogger;
         $this->statsdAPIClient = $statsdAPIClient;
     }
 
     public function saveUser(SaveUserDTO $saveUserDTO): UserIsSavedDTO
     {
-        $this->statsdAPIClient->increment('save_user_v5_attempt');
-        $this->logger->debug('This is debug message');
-        $this->logger->info('This is info message');
-        $this->logger->notice('This is notice message');
-        $this->logger->warning('This is warning message');
-        $this->logger->error('This is error message');
-        $this->logger->critical('This is critical message');
-        $this->logger->alert('This is alert message');
-        $this->logger->emergency('This is emergency message');
         $user = new User();
         $user->setLogin($saveUserDTO->login);
         $user->setPassword($saveUserDTO->password);
@@ -48,6 +39,7 @@ class SaveUserManager
         $user->setIsActive($saveUserDTO->isActive);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+        $this->logger->info("User #{$user->getId()} is saved: [{$user->getLogin()}, {$user->getAge()} yrs]");
 
         $result = new UserIsSavedDTO();
         $context = (new SerializationContext())->setGroups(['user1', 'user2']);
@@ -55,5 +47,4 @@ class SaveUserManager
 
         return $result;
     }
-
 }
