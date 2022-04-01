@@ -13,3 +13,20 @@ fos_elastica:
                 phone: ~
                 email: ~
                 preferred: ~
+        tweet:
+            persistence:
+                driver: orm
+                model: App\Entity\Tweet
+                provider: ~
+                finder: ~
+            properties:
+                author:
+                    type: nested
+                    properties:
+                        name:
+                            property_path: login
+                        age: ~
+                        phone: ~
+                        email: ~
+                        preferred: ~
+                text: ~
