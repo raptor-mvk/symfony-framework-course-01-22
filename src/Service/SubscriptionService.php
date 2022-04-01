@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\DTO\AddFollowersDTO;
 use App\DTO\SaveUserDTO;
+use App\Entity\Subscription;
 use App\Entity\User;
 use App\Manager\SubscriptionManager;
 use App\Manager\UserManager;
@@ -45,7 +46,10 @@ class SubscriptionService
             $password = $followerLogin;
             $age = $i;
             $isActive = true;
-            $data = compact('login', 'password', 'age', 'isActive');
+            $phone = '+'.str_pad((string)abs(crc32($login)), 10, '0');
+            $email = "$login@gmail.com";
+            $preferred = random_int(0, 1) === 1 ? User::EMAIL_NOTIFICATION : User::SMS_NOTIFICATION;
+            $data = compact('login', 'password', 'age', 'isActive', 'phone', 'email', 'preferred');
             $followerId = $this->userManager->saveUserFromDTO(new User(), new SaveUserDTO($data));
             if ($followerId !== null) {
                 $this->subscribe($user->getId(), $followerId);
@@ -69,5 +73,30 @@ class SubscriptionService
         }
 
         return $result;
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getFollowerIds(int $authorId): array
+    {
+        $subscriptions = $this->getSubscriptionsByAuthorId($authorId);
+        $mapper = static function(Subscription $subscription) {
+            return $subscription->getFollower()->getId();
+        };
+
+        return array_map($mapper, $subscriptions);
+    }
+
+    /**
+     * @return Subscription[]
+     */
+    private function getSubscriptionsByAuthorId(int $authorId): array
+    {
+        $author = $this->userManager->findUserById($authorId);
+        if (!($author instanceof User)) {
+            return [];
+        }
+        return $this->subscriptionManager->findAllByAuthor($author);
     }
 }

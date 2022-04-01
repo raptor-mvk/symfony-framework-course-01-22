@@ -1,0 +1,137 @@
+﻿{
+  "id": 23763571993,
+  "gridPos": {
+    "h": 9,
+    "w": 12,
+    "x": 0,
+    "y": 0
+  },
+  "type": "graph",
+  "title": "Panel Title",
+  "thresholds": [],
+  "pluginVersion": "8.1.1",
+  "legend": {
+    "show": true,
+    "values": true,
+    "min": false,
+    "max": true,
+    "current": false,
+    "total": false,
+    "avg": false,
+    "rightSide": true,
+    "alignAsTable": true,
+    "sort": "max",
+    "sortDesc": true
+  },
+  "options": {
+    "alertThreshold": true
+  },
+  "targets": [
+    {
+      "refId": "A",
+      "target": "stats_counts.my_app.update_feed_0",
+      "textEditor": false
+    },
+    {
+      "refId": "B",
+      "target": "stats_counts.my_app.update_feed_1",
+      "textEditor": false
+    },
+    {
+      "refId": "C",
+      "target": "stats_counts.my_app.update_feed_2",
+      "textEditor": false
+    },
+    {
+      "refId": "D",
+      "target": "stats_counts.my_app.update_feed_3",
+      "textEditor": false
+    },
+    {
+      "refId": "E",
+      "target": "stats_counts.my_app.update_feed_4",
+      "textEditor": false
+    },
+    {
+      "refId": "F",
+      "target": "stats_counts.my_app.update_feed_5",
+      "textEditor": false
+    },
+    {
+      "refId": "G",
+      "target": "stats_counts.my_app.update_feed_6",
+      "textEditor": false
+    },
+    {
+      "refId": "H",
+      "target": "stats_counts.my_app.update_feed_7",
+      "textEditor": false
+    },
+    {
+      "refId": "I",
+      "target": "stats_counts.my_app.update_feed_8",
+      "textEditor": false
+    },
+    {
+      "refId": "J",
+      "target": "stats_counts.my_app.update_feed_9",
+      "textEditor": false
+    }
+  ],
+  "renderer": "flot",
+  "yaxes": [
+    {
+      "label": null,
+      "show": true,
+      "logBase": 1,
+      "min": null,
+      "max": null,
+      "format": "short"
+    },
+    {
+      "label": null,
+      "show": true,
+      "logBase": 1,
+      "min": null,
+      "max": null,
+      "format": "short"
+    }
+  ],
+  "xaxis": {
+    "show": true,
+    "mode": "time",
+    "name": null,
+    "values": [],
+    "buckets": null
+  },
+  "yaxis": {
+    "align": false,
+    "alignLevel": null
+  },
+  "lines": true,
+  "fill": 1,
+  "fillGradient": 0,
+  "linewidth": 1,
+  "dashes": false,
+  "hiddenSeries": false,
+  "dashLength": 10,
+  "spaceLength": 10,
+  "points": false,
+  "pointradius": 2,
+  "bars": false,
+  "stack": false,
+  "percentage": false,
+  "nullPointMode": "null",
+  "steppedLine": false,
+  "tooltip": {
+    "value_type": "individual",
+    "shared": true,
+    "sort": 0
+  },
+  "timeFrom": null,
+  "timeShift": null,
+  "aliasColors": {},
+  "seriesOverrides": [],
+  "timeRegions": [],
+  "datasource": null
+}

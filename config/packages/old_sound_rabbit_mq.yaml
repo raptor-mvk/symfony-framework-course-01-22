@@ -6,6 +6,15 @@ old_sound_rabbit_mq:
         add_followers:
             connection: default
             exchange_options: {name: 'old_sound_rabbit_mq.add_followers', type: direct}
+        publish_tweet:
+            connection: default
+            exchange_options: {name: 'old_sound_rabbit_mq.publish_tweet', type: direct}
+        send_notification:
+            connection: default
+            exchange_options: {name: 'old_sound_rabbit_mq.send_notification', type: topic}
+        update_feed:
+            connection: default
+            exchange_options: {name: 'old_sound_rabbit_mq.update_feed', type: x-consistent-hash}
 
     consumers:
         add_followers:
@@ -19,3 +28,150 @@ old_sound_rabbit_mq:
                 timeout: 1800
                 exit_code: 0
             qos_options: {prefetch_size: 0, prefetch_count: 30, global: false}
+        publish_tweet:
+            connection: default
+            exchange_options: {name: 'old_sound_rabbit_mq.publish_tweet', type: direct}
+            queue_options: {name: 'old_sound_rabbit_mq.consumer.publish_tweet'}
+            callback: App\Consumer\PublishTweet\Consumer
+            idle_timeout: 300
+            idle_timeout_exit_code: 0
+            graceful_max_execution:
+                timeout: 1800
+                exit_code: 0
+            qos_options: {prefetch_size: 0, prefetch_count: 1, global: false}
+        send_notification.email:
+            connection: default
+            exchange_options: {name: 'old_sound_rabbit_mq.send_notification', type: topic}
+            queue_options:
+                name: 'old_sound_rabbit_mq.consumer.send_notification.email'
+                routing_keys: [!php/const App\Entity\User::EMAIL_NOTIFICATION]
+            callback: App\Consumer\SendEmailNotification\Consumer
+            idle_timeout: 300
+            idle_timeout_exit_code: 0
+            graceful_max_execution:
+                timeout: 1800
+                exit_code: 0
+            qos_options: {prefetch_size: 0, prefetch_count: 1, global: false}
+        send_notification.sms:
+            connection: default
+            exchange_options: {name: 'old_sound_rabbit_mq.send_notification', type: topic}
+            queue_options:
+                name: 'old_sound_rabbit_mq.consumer.send_notification.sms'
+                routing_keys: [!php/const App\Entity\User::SMS_NOTIFICATION]
+            callback: App\Consumer\SendSmsNotification\Consumer
+            idle_timeout: 300
+            idle_timeout_exit_code: 0
+            graceful_max_execution:
+                timeout: 1800
+                exit_code: 0
+            qos_options: {prefetch_size: 0, prefetch_count: 1, global: false}
+        update_feed_0:
+            connection: default
+            exchange_options: {name: 'old_sound_rabbit_mq.update_feed', type: x-consistent-hash}
+            queue_options: {name: 'old_sound_rabbit_mq.consumer.update_feed_0', routing_key: '20'}
+            callback: App\Consumer\UpdateFeed\Consumer0
+            idle_timeout: 300
+            idle_timeout_exit_code: 0
+            graceful_max_execution:
+                timeout: 1800
+                exit_code: 0
+            qos_options: {prefetch_size: 0, prefetch_count: 1, global: false}
+        update_feed_1:
+            connection: default
+            exchange_options: {name: 'old_sound_rabbit_mq.update_feed', type: x-consistent-hash}
+            queue_options: {name: 'old_sound_rabbit_mq.consumer.update_feed_1', routing_key: '20'}
+            callback: App\Consumer\UpdateFeed\Consumer1
+            idle_timeout: 300
+            idle_timeout_exit_code: 0
+            graceful_max_execution:
+                timeout: 1800
+                exit_code: 0
+            qos_options: {prefetch_size: 0, prefetch_count: 1, global: false}
+        update_feed_2:
+            connection: default
+            exchange_options: {name: 'old_sound_rabbit_mq.update_feed', type: x-consistent-hash}
+            queue_options: {name: 'old_sound_rabbit_mq.consumer.update_feed_2', routing_key: '20'}
+            callback: App\Consumer\UpdateFeed\Consumer2
+            idle_timeout: 300
+            idle_timeout_exit_code: 0
+            graceful_max_execution:
+                timeout: 1800
+                exit_code: 0
+            qos_options: {prefetch_size: 0, prefetch_count: 1, global: false}
+        update_feed_3:
+            connection: default
+            exchange_options: {name: 'old_sound_rabbit_mq.update_feed', type: x-consistent-hash}
+            queue_options: {name: 'old_sound_rabbit_mq.consumer.update_feed_3', routing_key: '20'}
+            callback: App\Consumer\UpdateFeed\Consumer3
+            idle_timeout: 300
+            idle_timeout_exit_code: 0
+            graceful_max_execution:
+                timeout: 1800
+                exit_code: 0
+            qos_options: {prefetch_size: 0, prefetch_count: 1, global: false}
+        update_feed_4:
+            connection: default
+            exchange_options: {name: 'old_sound_rabbit_mq.update_feed', type: x-consistent-hash}
+            queue_options: {name: 'old_sound_rabbit_mq.consumer.update_feed_4', routing_key: '20'}
+            callback: App\Consumer\UpdateFeed\Consumer4
+            idle_timeout: 300
+            idle_timeout_exit_code: 0
+            graceful_max_execution:
+                timeout: 1800
+                exit_code: 0
+            qos_options: {prefetch_size: 0, prefetch_count: 1, global: false}
+        update_feed_5:
+            connection: default
+            exchange_options: {name: 'old_sound_rabbit_mq.update_feed', type: x-consistent-hash}
+            queue_options: {name: 'old_sound_rabbit_mq.consumer.update_feed_5', routing_key: '20'}
+            callback: App\Consumer\UpdateFeed\Consumer5
+            idle_timeout: 300
+            idle_timeout_exit_code: 0
+            graceful_max_execution:
+                timeout: 1800
+                exit_code: 0
+            qos_options: {prefetch_size: 0, prefetch_count: 1, global: false}
+        update_feed_6:
+            connection: default
+            exchange_options: {name: 'old_sound_rabbit_mq.update_feed', type: x-consistent-hash}
+            queue_options: {name: 'old_sound_rabbit_mq.consumer.update_feed_6', routing_key: '20'}
+            callback: App\Consumer\UpdateFeed\Consumer6
+            idle_timeout: 300
+            idle_timeout_exit_code: 0
+            graceful_max_execution:
+                timeout: 1800
+                exit_code: 0
+            qos_options: {prefetch_size: 0, prefetch_count: 1, global: false}
+        update_feed_7:
+            connection: default
+            exchange_options: {name: 'old_sound_rabbit_mq.update_feed', type: x-consistent-hash}
+            queue_options: {name: 'old_sound_rabbit_mq.consumer.update_feed_7', routing_key: '20'}
+            callback: App\Consumer\UpdateFeed\Consumer7
+            idle_timeout: 300
+            idle_timeout_exit_code: 0
+            graceful_max_execution:
+                timeout: 1800
+                exit_code: 0
+            qos_options: {prefetch_size: 0, prefetch_count: 1, global: false}
+        update_feed_8:
+            connection: default
+            exchange_options: {name: 'old_sound_rabbit_mq.update_feed', type: x-consistent-hash}
+            queue_options: {name: 'old_sound_rabbit_mq.consumer.update_feed_8', routing_key: '20'}
+            callback: App\Consumer\UpdateFeed\Consumer8
+            idle_timeout: 300
+            idle_timeout_exit_code: 0
+            graceful_max_execution:
+                timeout: 1800
+                exit_code: 0
+            qos_options: {prefetch_size: 0, prefetch_count: 1, global: false}
+        update_feed_9:
+            connection: default
+            exchange_options: {name: 'old_sound_rabbit_mq.update_feed', type: x-consistent-hash}
+            queue_options: {name: 'old_sound_rabbit_mq.consumer.update_feed_9', routing_key: '20'}
+            callback: App\Consumer\UpdateFeed\Consumer9
+            idle_timeout: 300
+            idle_timeout_exit_code: 0
+            graceful_max_execution:
+                timeout: 1800
+                exit_code: 0
+            qos_options: {prefetch_size: 0, prefetch_count: 1, global: false}
