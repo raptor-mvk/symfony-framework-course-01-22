@@ -14,14 +14,14 @@
 3. В класс `App\Entity\User` добавляем поле `$token` и стандартные геттер/сеттер для него
     ```php
     #[ORM\Column(type: 'string', length: 32, unique: true, nullable: true)]
-    private string $token;
+    private ?string $token = null;
 
-    public function getToken(): string
+    public function getToken(): ?string
     {
         return $this->token;
     }
 
-    public function setToken(string $token): void
+    public function setToken(?string $token): void
     {
         $this->token = $token;
     }

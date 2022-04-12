@@ -170,3 +170,7 @@ services:
         class: App\Consumer\UpdateFeed\Consumer
         arguments:
             $key: 'update_feed_9'
+
+    App\Manager\UserManager:
+        arguments:
+            $finder: '@fos_elastica.finder.user'

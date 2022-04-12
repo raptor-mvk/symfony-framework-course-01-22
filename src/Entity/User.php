@@ -28,7 +28,7 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
     private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 32, unique: true, nullable: false)]
-    #[JMS\Groups(['user1'])]
+    #[JMS\Groups(['user1', 'elastica'])]
     private string $login;
 
     #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
@@ -62,7 +62,7 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
 
     #[ORM\Column(type: 'integer', nullable: false)]
     #[JMS\Type('int')]
-    #[JMS\Groups(['user1'])]
+    #[JMS\Groups(['user1', 'elastica'])]
     private int $age;
 
     #[ORM\Column(type: 'boolean', nullable: false)]
@@ -75,16 +75,22 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
     private string $roles = '{}';
 
     #[ORM\Column(type: 'string', length: 32, unique: true, nullable: true)]
-    private string $token;
+    private ?string $token = null;
 
     #[ORM\Column(type: 'string', length: 11, nullable: true)]
-    private string $phone;
+    #[JMS\Type('string')]
+    #[JMS\Groups(['elastica'])]
+    private ?string $phone = null;
 
     #[ORM\Column(type: 'string', length: 128, nullable: true)]
-    private string $email;
+    #[JMS\Type('string')]
+    #[JMS\Groups(['elastica'])]
+    private ?string $email = null;
 
     #[ORM\Column(type: 'string', length: 10, nullable: true)]
-    private string $preferred;
+    #[JMS\Type('string')]
+    #[JMS\Groups(['elastica'])]
+    private ?string $preferred = null;
 
     public function __construct()
     {
@@ -292,42 +298,42 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
         return $this->login;
     }
 
-    public function getToken(): string
+    public function getToken(): ?string
     {
         return $this->token;
     }
 
-    public function setToken(string $token): void
+    public function setToken(?string $token): void
     {
         $this->token = $token;
     }
 
-    public function getPhone(): string
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
 
-    public function setPhone(string $phone): void
+    public function setPhone(?string $phone): void
     {
         $this->phone = $phone;
     }
 
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setEmail(string $email): void
+    public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
 
-    public function getPreferred(): string
+    public function getPreferred(): ?string
     {
         return $this->preferred;
     }
 
-    public function setPreferred(string $preferred): void
+    public function setPreferred(?string $preferred): void
     {
         $this->preferred = $preferred;
     }

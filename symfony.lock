@@ -83,8 +83,29 @@
     "doctrine/sql-formatter": {
         "version": "1.1.2"
     },
+    "elasticsearch/elasticsearch": {
+        "version": "v7.17.0"
+    },
+    "ezimuel/guzzlestreams": {
+        "version": "3.0.1"
+    },
+    "ezimuel/ringphp": {
+        "version": "1.2.0"
+    },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
+    },
+    "friendsofsymfony/elastica-bundle": {
+        "version": "6.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "5.0",
+            "ref": "46c9cd2c1e07f0fcfd97e96f12b03b2e0845c4cd"
+        },
+        "files": [
+            "config/packages/fos_elastica.yaml"
+        ]
     },
     "friendsofsymfony/rest-bundle": {
         "version": "3.3",
@@ -163,6 +184,9 @@
     "nikic/php-parser": {
         "version": "v4.13.2"
     },
+    "nyholm/dsn": {
+        "version": "2.0.1"
+    },
     "nyholm/psr7": {
         "version": "1.5",
         "recipe": {
@@ -174,6 +198,9 @@
         "files": [
             "config/packages/nyholm_psr7.yaml"
         ]
+    },
+    "pagerfanta/pagerfanta": {
+        "version": "v3.6.1"
     },
     "paragonie/constant_time_encoding": {
         "version": "v2.5.0"
@@ -244,6 +271,12 @@
     },
     "ralouphie/getallheaders": {
         "version": "3.0.3"
+    },
+    "react/promise": {
+        "version": "v2.9.0"
+    },
+    "ruflin/elastica": {
+        "version": "7.1.5"
     },
     "sensio/framework-extra-bundle": {
         "version": "6.2",

@@ -1,0 +1,28 @@
+# Read the documentation: https://github.com/FriendsOfSymfony/FOSElasticaBundle/blob/master/doc/setup.md
+fos_elastica:
+    clients:
+        default: { url: '%env(ELASTICSEARCH_URL)%' }
+    serializer:
+        serializer: jms_serializer
+    indexes:
+        user:
+            persistence:
+                driver: orm
+                model: App\Entity\User
+                listener:
+                    insert: false
+                    update: true
+                    delete: true
+            serializer:
+                groups: [elastica]
+            properties:
+                preferred:
+                    fielddata: true
+        tweet:
+            persistence:
+                driver: orm
+                model: App\Entity\Tweet
+                provider: ~
+                finder: ~
+            serializer:
+                groups: [elastica]
