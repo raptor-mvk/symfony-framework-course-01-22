@@ -54,6 +54,7 @@ class SubscriptionServiceTest extends TestCase
      */
     public function testSubscribeReturnsCorrectResult(int $authorId, int $followerId, bool $expected): void
     {
+        usleep(400000);
         /** @var UserPasswordHasherInterface $encoder */
         $encoder = Mockery::mock(UserPasswordHasherInterface::class);
         /** @var PaginatedFinderInterface $finder */
