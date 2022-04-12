@@ -69,4 +69,28 @@ class SubscriptionServiceTest extends TestCase
 
         static::assertSame($expected, $actual, 'Subscribe should return correct result');
     }
+
+    public function testSubscribeReturnsAfterFirstError(): void
+    {
+        /** @var MockInterface|EntityRepository $repository */
+        $repository = Mockery::mock(EntityRepository::class);
+        $repository->shouldReceive('find')->with(self::INCORRECT_AUTHOR)->andReturn(null)->never();
+        $repository->shouldReceive('find')->with(self::INCORRECT_FOLLOWER)->never();
+        /** @var MockInterface|EntityManagerInterface $repository */
+        self::$entityManager = Mockery::mock(EntityManagerInterface::class);
+        self::$entityManager->shouldReceive('getRepository')->with(User::class)->andReturn($repository);
+        self::$entityManager->shouldReceive('persist');
+        self::$entityManager->shouldReceive('flush');
+        /** @var UserPasswordHasherInterface $encoder */
+        $encoder = Mockery::mock(UserPasswordHasherInterface::class);
+        /** @var PaginatedFinderInterface $finder */
+        $finder = Mockery::mock(PaginatedFinderInterface::class);
+        /** @var FormFactoryInterface $formFactory */
+        $formFactory = Mockery::mock(FormFactoryInterface::class);
+        $userManager = new UserManager(self::$entityManager, $formFactory, $encoder, $finder);
+        $subscriptionManager = new SubscriptionManager(self::$entityManager);
+        $subscriptionService = new SubscriptionService($userManager, $subscriptionManager);
+
+        $subscriptionService->subscribe(self::INCORRECT_AUTHOR, self::INCORRECT_FOLLOWER);
+    }
 }
