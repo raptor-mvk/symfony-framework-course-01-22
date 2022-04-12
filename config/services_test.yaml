@@ -1,0 +1,7 @@
+services:
+  redis_adapter:
+    class: Symfony\Component\Cache\Adapter\RedisTagAwareAdapter
+    arguments:
+      - '@redis_client'
+      - 'my_app'
+    public: true

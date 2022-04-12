@@ -21,4 +21,23 @@ class TweetRepository extends EntityRepository
 
         return $qb->getQuery()->enableResultCache(null, "tweets_{$page}_{$perPage}")->getResult();
     }
+
+    /**
+     * @param int[] $authorIds
+     *
+     * @return Tweet[]
+     */
+    public function getByAuthorIds(array $authorIds, int $count): array
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('t')
+            ->from($this->getClassName(), 't')
+            ->where($qb->expr()->in('IDENTITY(t.author)', ':authorIds'))
+            ->orderBy('t.createdAt', 'DESC')
+            ->setMaxResults($count);
+
+        $qb->setParameter('authorIds', $authorIds);
+
+        return $qb->getQuery()->getResult();
+    }
 }
