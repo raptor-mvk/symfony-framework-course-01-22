@@ -6,23 +6,26 @@ use App\Entity\Tweet;
 use App\Entity\User;
 use DateTime;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\PhpUnit\ClockMock;
 
 class TweetTest extends TestCase
 {
+    private const NOW_TIME = '@now';
+
     public function tweetDataProvider(): array
     {
         $expectedPositive = [
             'id' => 5,
             'author' => 'Terry Pratchett',
             'text' => 'The Colour of Magic',
-            'createdAt' => (new DateTime())->format('Y-m-d h:i:s'),
+            'createdAt' => self::NOW_TIME,
         ];
         $positiveTweet = $this->addAuthor($this->makeTweet($expectedPositive), $expectedPositive);
         $expectedNoAuthor = [
             'id' => 30,
             'author' => null,
             'text' => 'Unknown book',
-            'createdAt' => (new DateTime())->format('Y-m-d h:i:s'),
+            'createdAt' => self::NOW_TIME,
         ];
         $expectedNoCreatedAt = [
             'id' => 42,
@@ -56,9 +59,14 @@ class TweetTest extends TestCase
 
     /**
      * @dataProvider tweetDataProvider
+     * @group time-sensitive
      */
     public function testToFeedReturnsCorrectValues(Tweet $tweet, array $expected, ?int $delay = null): void
     {
+        ClockMock::register(Tweet::class);
+        if ($expected['createdAt'] === self::NOW_TIME) {
+            $expected['createdAt'] = DateTime::createFromFormat('U',(string)time())->format('Y-m-d h:i:s');
+        }
         $tweet = $this->setCreatedAtWithDelay($tweet, $delay);
         $actual = $tweet->toFeed();
 
