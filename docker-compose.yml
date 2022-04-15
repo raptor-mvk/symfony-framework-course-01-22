@@ -167,7 +167,23 @@ services:
     ports:
       - 5601:5601
 
+  postgres_test:
+    image: postgres:11
+    ports:
+      - 25432:5432
+    container_name: 'postgresql_test'
+    working_dir: /app
+    restart: always
+    environment:
+      POSTGRES_DB: 'twitter_test'
+      POSTGRES_USER: 'user'
+      POSTGRES_PASSWORD: 'password'
+    volumes:
+      - dump:/app/dump
+      - postgresql_test:/var/lib/postgresql/data
+
 volumes:
   dump:
   postgresql:
   sentry-pgdb:
+  postgresql_test:

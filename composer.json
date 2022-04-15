@@ -58,7 +58,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "UnitTests\\": "tests/unit"
         }
     },
     "replace": {
@@ -86,5 +86,10 @@
             "allow-contrib": false,
             "require": "5.4.*"
         }
+    },
+    "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "mockery/mockery": "^1.5",
+        "symfony/phpunit-bridge": "^6.0"
     }
 }
