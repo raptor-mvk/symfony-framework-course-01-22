@@ -29,6 +29,7 @@ class AddFollowersCommand extends Command
     protected function configure(): void
     {
         $this->setName('followers:add')
+            ->setHidden(true)
             ->setDescription('Adds followers to author')
             ->addArgument('authorId', InputArgument::REQUIRED, 'ID of author')
             ->addArgument('count', InputArgument::OPTIONAL, 'How many followers should be added')
