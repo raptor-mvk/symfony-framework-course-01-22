@@ -18,6 +18,8 @@ class AddFollowersCommand extends Command
 {
     use LockableTrait;
 
+    public const FOLLOWERS_ADD_COMMAND_NAME = 'followers:add';
+
     private const DEFAULT_FOLLOWERS = 100;
     private const DEFAULT_LOGIN_PREFIX = 'Reader #';
 
@@ -34,7 +36,7 @@ class AddFollowersCommand extends Command
 
     protected function configure(): void
     {
-        $this->setName('followers:add')
+        $this->setName(self::FOLLOWERS_ADD_COMMAND_NAME)
             ->setHidden(true)
             ->setDescription('Adds followers to author')
             ->addArgument('authorId', InputArgument::REQUIRED, 'ID of author')
