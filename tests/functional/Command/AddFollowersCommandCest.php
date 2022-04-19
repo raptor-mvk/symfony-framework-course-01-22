@@ -26,8 +26,7 @@ class AddFollowersCommandCest
      */
     public function testExecuteReturnsResult(FunctionalTester $I, Example $example): void
     {
-        $I->loadFixtures(MultipleUsersFixture::class);
-        $author = $I->grabEntityFromRepository(User::class, ['login' => MultipleUsersFixture::PRATCHETT]);
+        $author = $I->have(User::class);
         $params = ['authorId' => $author->getId()];
         $inputs = $example['followersCount'] === null ? ["\n"] : [$example['followersCount']."\n"];
         $output = $I->runSymfonyConsoleCommand(self::COMMAND, $params, $inputs, $example['exitCode']);
