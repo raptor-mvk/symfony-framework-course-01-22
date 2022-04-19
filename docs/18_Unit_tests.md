@@ -15,6 +15,10 @@
         }
     },
     ```
+5. Исправляем файл `phpunit.xml.dist`, добавляя в раздел `<php>` новую переменную
+    ```xml
+    <server name="SYMFONY_DEPRECATIONS_HELPER" value="disabled" />
+    ```
 
 ## Пишем первый тест
 
