@@ -7,6 +7,8 @@
 actor: AcceptanceTester
 modules:
     enabled:
-        - PhpBrowser:
-            url: http://localhost:8000
+        - REST:
+              url: http://nginx:80
+              depends: PhpBrowser
+              part: Json
         - \App\Tests\Helper\Acceptance
