@@ -59,7 +59,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "UnitTests\\": "tests/phpunit"
+            "UnitTests\\": "tests/phpunit",
+            "CodeceptionUnitTests\\": "tests/unit"
         }
     },
     "replace": {
