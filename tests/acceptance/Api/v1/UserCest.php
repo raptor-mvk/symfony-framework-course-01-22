@@ -7,16 +7,30 @@ use Codeception\Util\HttpCode;
 
 class UserCest
 {
-    public function testAddUserAction(AcceptanceTester $I): void
+    public function testAddUserActionForAdmin(AcceptanceTester $I): void
     {
-        $I->sendPost('/api/v4/save-user', [
-            'login' => 'my_user',
-            'password' => 'my_password',
+        $I->amAdmin();
+        $I->sendPost('/api/v4/save-user', $this->getAddUserParams());
+        $I->canSeeResponseCodeIs(HttpCode::OK);
+        $I->canSeeResponseMatchesJsonType(['id' => 'integer:>0']);
+    }
+
+    public function testAddUserActionForUser(AcceptanceTester $I): void
+    {
+        $I->amUser();
+        $I->sendPost('/api/v4/save-user', $this->getAddUserParams());
+        $I->canSeeResponseContains('Access Denied.');
+        $I->canSeeResponseCodeIs(HttpCode::INTERNAL_SERVER_ERROR);
+    }
+
+    private function getAddUserParams(): array
+    {
+        return [
+            'login' => 'other_user',
+            'password' => 'other_password',
             'roles' => '["ROLE_USER"]',
             'age' => 23,
             'isActive' => 'true',
-        ]);
-        $I->canSeeResponseCodeIs(HttpCode::OK);
-        $I->canSeeResponseMatchesJsonType(['id' => 'integer:>0']);
+        ];
     }
 }
