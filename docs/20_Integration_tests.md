@@ -338,7 +338,7 @@
         - Asserts
         ```
 5. Перегенерируем акторы командой `./vendor/bin/codecept build`
-7. Переносим класс `CodeceptionUnitTests\Command\AddFollowersCommandTest` в namespace `IntegerationTests`,
+6. Переносим класс `CodeceptionUnitTests\Command\AddFollowersCommandTest` в namespace `IntegerationTests`,
    переименовываем в `AddFollowersCommandCest` и исправляем:
     ```php
     <?php
@@ -378,7 +378,7 @@
         }
     }
     ```
-9. Очищаем в тестовой БД таблицы `subscription`, `tweet`, `user`
+7. Очищаем в тестовой БД таблицы `subscription`, `tweet`, `user`
 8. Запускаем тесты командой `./vendor/bin/codecept run functional`, видим ошибки
  
 ## Чиним тест команды
@@ -603,7 +603,7 @@
                 $author = $I->grabEntityFromRepository(User::class, ['login' => $authorLogin]);
                 $I->have(Subscription::class, ['author' => $author, 'follower' => $follower]);
             }
-            $feedService = $I->grabService('App\Service\FeedService');
+            $feedService = $I->grabService(FeedService::class);
    
             $feed = $feedService->getFeedFromTweets($follower->getId(), $example['tweetsCount']);
    
