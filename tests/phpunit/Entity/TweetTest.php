@@ -1,14 +1,14 @@
 <?php
 
-namespace CodeceptionUnitTests\Entity;
+namespace UnitTests\Entity;
 
 use App\Entity\Tweet;
 use App\Entity\User;
-use Codeception\Test\Unit;
 use DateTime;
+use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\PhpUnit\ClockMock;
 
-class TweetTest extends Unit
+class TweetTest extends TestCase
 {
     private const NOW_TIME = '@now';
 
