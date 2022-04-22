@@ -1,0 +1,247 @@
+openapi: 3.0.0
+info:
+  title: 'My App'
+  description: 'This is an awesome app!'
+  version: 1.0.0
+paths:
+  '/api/v2/user/by-login/{user_login}':
+    get:
+      operationId: 3aba36214d34051436296c07d3456aa2
+      parameters:
+        -
+          name: user_login
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: ''
+  /api/v1/add-followers:
+    post:
+      operationId: cd8d0b0a84c625fee55c58fa7bf1d656
+      responses:
+        default:
+          description: ''
+  /api/v1/get-feed:
+    get:
+      tags:
+        - Лента
+      operationId: get_app_api_getfeed_v1_getfeed
+      parameters:
+        -
+          name: userId
+          in: query
+          description: 'ID пользователя'
+          example: '135'
+        -
+          name: count
+          in: query
+          description: 'ID пользователя'
+          example: '135'
+      responses:
+        default:
+          description: ''
+  /api/v1/tweet:
+    get:
+      operationId: 0db7dcda24c33298350638f5e2b75fd2
+      responses:
+        default:
+          description: ''
+    post:
+      operationId: 52d9ca1f6eb51968494b86229192d231
+      responses:
+        default:
+          description: ''
+  /api/v4/get-users:
+    get:
+      operationId: 668fb364588c10db332a79d95dca271a
+      responses:
+        default:
+          description: ''
+  /api/v1/get-users-by-query:
+    get:
+      operationId: 41c43ba85ab6dedad6fc2d8c934aebf1
+      responses:
+        default:
+          description: ''
+  /api/v1/get-users-by-query-with-aggregation:
+    get:
+      operationId: 9c1d9e489c134265b07bd8208cc38f3e
+      responses:
+        default:
+          description: ''
+  /api/v1/get-users-with-aggregation:
+    get:
+      operationId: 5736c146063a5980da0155c91f66733f
+      responses:
+        default:
+          description: ''
+  /api/v4/save-user:
+    post:
+      operationId: aabb5e36f9a4af4d5a675ab92039c153
+      responses:
+        default:
+          description: ''
+  /api/v5/save-user:
+    post:
+      operationId: b4410b4eb7e2974fb5d4a250f2aec4a8
+      responses:
+        default:
+          description: ''
+  /api/v1/token:
+    post:
+      operationId: fe44116f9660eacc2400763958c0b3fd
+      responses:
+        default:
+          description: ''
+  /api/v1/upload:
+    post:
+      operationId: 06b4ea5b63743c64c2ba74e138b064ea
+      responses:
+        default:
+          description: ''
+  /api/v1/user:
+    get:
+      operationId: caa10f807089f6ca7e2246a6de127710
+      responses:
+        default:
+          description: ''
+    post:
+      operationId: f7a4abaafcfca9ccef890412f951fa4e
+      responses:
+        default:
+          description: ''
+    delete:
+      operationId: c1f63ae4ad66722b7007580b48ae3a97
+      responses:
+        default:
+          description: ''
+    patch:
+      operationId: 96c3d4d49271efaf23787aa866acb1e9
+      responses:
+        default:
+          description: ''
+  '/api/v1/user/{id}':
+    delete:
+      operationId: 6cba798108b72938d26350c4a3261ab7
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: \d+
+      responses:
+        default:
+          description: ''
+  /api/v1/user/async:
+    post:
+      operationId: 86723328baca5c6d60f9c99dd3eaa37e
+      responses:
+        default:
+          description: ''
+  /api/v1/user/form:
+    get:
+      operationId: 8fe31a1881ed3e15296e330ee6019d6a
+      responses:
+        default:
+          description: ''
+    post:
+      operationId: 8f37fac01da7de02d456caec17380ccf
+      responses:
+        default:
+          description: ''
+  '/api/v1/user/form/{id}':
+    get:
+      operationId: d2f506204bd6e3930953a7d696a1b04f
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: \d+
+      responses:
+        default:
+          description: ''
+    patch:
+      operationId: d095ec1c7f4a25a872422e18a2f924f2
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: \d+
+      responses:
+        default:
+          description: ''
+  /api/v2/user:
+    get:
+      operationId: 9387d80bfc7d359e0ca5ac24c2d8fa09
+      responses:
+        default:
+          description: ''
+    post:
+      operationId: ac57d9497188ec30b1b74ab86ec4871e
+      responses:
+        default:
+          description: ''
+    patch:
+      operationId: 775c70d3b1b8519c4f3f360951e2fde7
+      responses:
+        default:
+          description: ''
+  '/api/v2/user/{user_id}':
+    delete:
+      operationId: 86086fb8068fb2d92b4138fe11047477
+      parameters:
+        -
+          name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: \d+
+      responses:
+        default:
+          description: ''
+  /api/v3/user:
+    get:
+      operationId: 71f5763eb728c23b620120733c05abcf
+      responses:
+        default:
+          description: ''
+    post:
+      operationId: 0e0fc562a169b50ee43641ad04961fe5
+      responses:
+        default:
+          description: ''
+    delete:
+      operationId: 54091748a0cd9948f427f8103291e273
+      responses:
+        default:
+          description: ''
+    patch:
+      operationId: acef5675f24f9ee9ac0bf2f3d5da933a
+      responses:
+        default:
+          description: ''
+  '/api/doc/{area}':
+    get:
+      operationId: 023e90287a9c6d21cd7c93171fc09e60
+      parameters:
+        -
+          name: area
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: ''
+

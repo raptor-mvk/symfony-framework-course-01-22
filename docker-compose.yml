@@ -182,6 +182,12 @@ services:
       - dump:/app/dump
       - postgresql_test:/var/lib/postgresql/data
 
+  openapi-generator:
+    image: openapitools/openapi-generator-cli:latest
+    volumes:
+      - ./:/local
+    command: ["generate", "-i", "/local/apidoc.yaml", "-g", "php", "-o", "/local/api-client"]
+
 volumes:
   dump:
   postgresql:
