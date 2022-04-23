@@ -1,0 +1,38 @@
+openapi: 3.0.0
+info:
+  title: 'My App'
+  description: 'This is an awesome app!'
+  version: 1.0.0
+paths:
+  /api/v1/get-feed:
+    get:
+      tags:
+        - Лента
+      operationId: get_app_api_getfeed_v1_getfeed
+      parameters:
+        -
+          name: userId
+          in: query
+          description: 'ID пользователя'
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+            default: null
+            pattern: \d+
+          example: '135'
+        -
+          name: count
+          in: query
+          description: 'ID пользователя'
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+            default: null
+            pattern: \d+
+          example: '135'
+      responses:
+        default:
+          description: ''
+

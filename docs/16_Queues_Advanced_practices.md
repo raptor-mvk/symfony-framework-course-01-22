@@ -424,12 +424,9 @@
             $this->feedService = $feedService;
         }
     
-        /**
-         * @Rest\Get("/api/v1/get-feed")
-         *
-         * @Rest\QueryParam(name="userId", requirements="\d+")
-         * @Rest\QueryParam(name="count", requirements="\d+", nullable=true)
-         */
+        #[Rest\Get(path: '/api/v1/get-feed')]
+        #[Rest\QueryParam(name: 'userId', requirements: '\d+')]
+        #[Rest\QueryParam(name: 'count', requirements: '\d+', nullable: true)]
         public function getFeedAction(int $userId, ?int $count = null): View
         {
             $count = $count ?? self::DEFAULT_FEED_SIZE;

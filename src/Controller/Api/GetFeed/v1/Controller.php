@@ -6,6 +6,7 @@ use App\Service\FeedService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
+use OpenApi\Annotations as OA;
 
 class Controller extends AbstractFOSRestController
 {
@@ -19,11 +20,16 @@ class Controller extends AbstractFOSRestController
         $this->feedService = $feedService;
     }
 
+    #[Rest\Get(path: '/api/v1/get-feed')]
     /**
-     * @Rest\Get("/api/v1/get-feed")
-     *
      * @Rest\QueryParam(name="userId", requirements="\d+")
-     * @Rest\QueryParam(name="count", requirements="\d+", nullable=true)
+     * @Rest\QueryParam(name="count", requirements="\d+")
+     * @OA\Get(
+     *     operationId="getFeed",
+     *     tags={"Лента"},
+     *     @OA\Parameter(name="userId", in="query", description="ID пользователя", example="135"),
+     *     @OA\Parameter(name="count", in="query", description="Количество твитов в ленте", example="5")
+     * )
      */
     public function getFeedAction(int $userId, ?int $count = null): View
     {
