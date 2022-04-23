@@ -11,3 +11,8 @@ app.swagger_ui_areas:
   path: /api/doc/{area}
   methods: GET
   defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
+
+server_api:
+  resource: "@FeedBundle/Controller/ServerApi"
+  type: annotation
+  prefix: /server-api
