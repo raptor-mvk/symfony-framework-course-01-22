@@ -1,0 +1,7 @@
+services:
+
+  StatsdBundle\Client\StatsdAPIClient:
+    arguments:
+      - graphite
+      - 8125
+      - my_app

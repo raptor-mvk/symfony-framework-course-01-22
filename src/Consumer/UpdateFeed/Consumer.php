@@ -2,7 +2,7 @@
 
 namespace App\Consumer\UpdateFeed;
 
-use App\Client\StatsdAPIClient;
+use StatsdBundle\Client\StatsdAPIClient;
 use App\Consumer\UpdateFeed\Input\Message;
 use App\DTO\SendNotificationDTO;
 use App\Entity\Tweet;

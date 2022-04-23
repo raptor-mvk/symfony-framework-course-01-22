@@ -2,7 +2,7 @@
 
 namespace App\Symfony;
 
-use App\Client\StatsdAPIClient;
+use StatsdBundle\Client\StatsdAPIClient;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\InvalidArgumentException;
 use Psr\Log\LoggerAwareInterface;

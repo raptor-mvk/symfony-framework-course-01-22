@@ -20,6 +20,7 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
             - '../src/Controller/Common/*'
+            - '../src/StatsdBundle/'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
@@ -91,12 +92,6 @@ services:
         class: Monolog\Formatter\LineFormatter
         arguments:
             - "[%%level_name%%]: [%%datetime%%] %%message%%\n"
-
-    App\Client\StatsdAPIClient:
-        arguments:
-            - graphite
-            - 8125
-            - my_app
 
     redis_client:
         class: Redis
