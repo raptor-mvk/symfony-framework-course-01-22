@@ -69,7 +69,7 @@ old_sound_rabbit_mq:
             connection: default
             exchange_options: {name: 'old_sound_rabbit_mq.update_feed', type: x-consistent-hash}
             queue_options: {name: 'old_sound_rabbit_mq.consumer.update_feed_0', routing_key: '20'}
-            callback: App\Consumer\UpdateFeed\Consumer0
+            callback: FeedBundle\Consumer\UpdateFeed\Consumer0
             idle_timeout: 300
             idle_timeout_exit_code: 0
             graceful_max_execution:
@@ -80,7 +80,7 @@ old_sound_rabbit_mq:
             connection: default
             exchange_options: {name: 'old_sound_rabbit_mq.update_feed', type: x-consistent-hash}
             queue_options: {name: 'old_sound_rabbit_mq.consumer.update_feed_1', routing_key: '20'}
-            callback: App\Consumer\UpdateFeed\Consumer1
+            callback: FeedBundle\Consumer\UpdateFeed\Consumer1
             idle_timeout: 300
             idle_timeout_exit_code: 0
             graceful_max_execution:
@@ -91,7 +91,7 @@ old_sound_rabbit_mq:
             connection: default
             exchange_options: {name: 'old_sound_rabbit_mq.update_feed', type: x-consistent-hash}
             queue_options: {name: 'old_sound_rabbit_mq.consumer.update_feed_2', routing_key: '20'}
-            callback: App\Consumer\UpdateFeed\Consumer2
+            callback: FeedBundle\Consumer\UpdateFeed\Consumer2
             idle_timeout: 300
             idle_timeout_exit_code: 0
             graceful_max_execution:
@@ -102,7 +102,7 @@ old_sound_rabbit_mq:
             connection: default
             exchange_options: {name: 'old_sound_rabbit_mq.update_feed', type: x-consistent-hash}
             queue_options: {name: 'old_sound_rabbit_mq.consumer.update_feed_3', routing_key: '20'}
-            callback: App\Consumer\UpdateFeed\Consumer3
+            callback: FeedBundle\Consumer\UpdateFeed\Consumer3
             idle_timeout: 300
             idle_timeout_exit_code: 0
             graceful_max_execution:
@@ -113,7 +113,7 @@ old_sound_rabbit_mq:
             connection: default
             exchange_options: {name: 'old_sound_rabbit_mq.update_feed', type: x-consistent-hash}
             queue_options: {name: 'old_sound_rabbit_mq.consumer.update_feed_4', routing_key: '20'}
-            callback: App\Consumer\UpdateFeed\Consumer4
+            callback: FeedBundle\Consumer\UpdateFeed\Consumer4
             idle_timeout: 300
             idle_timeout_exit_code: 0
             graceful_max_execution:
@@ -124,7 +124,7 @@ old_sound_rabbit_mq:
             connection: default
             exchange_options: {name: 'old_sound_rabbit_mq.update_feed', type: x-consistent-hash}
             queue_options: {name: 'old_sound_rabbit_mq.consumer.update_feed_5', routing_key: '20'}
-            callback: App\Consumer\UpdateFeed\Consumer5
+            callback: FeedBundle\Consumer\UpdateFeed\Consumer5
             idle_timeout: 300
             idle_timeout_exit_code: 0
             graceful_max_execution:
@@ -135,7 +135,7 @@ old_sound_rabbit_mq:
             connection: default
             exchange_options: {name: 'old_sound_rabbit_mq.update_feed', type: x-consistent-hash}
             queue_options: {name: 'old_sound_rabbit_mq.consumer.update_feed_6', routing_key: '20'}
-            callback: App\Consumer\UpdateFeed\Consumer6
+            callback: FeedBundle\Consumer\UpdateFeed\Consumer6
             idle_timeout: 300
             idle_timeout_exit_code: 0
             graceful_max_execution:
@@ -146,7 +146,7 @@ old_sound_rabbit_mq:
             connection: default
             exchange_options: {name: 'old_sound_rabbit_mq.update_feed', type: x-consistent-hash}
             queue_options: {name: 'old_sound_rabbit_mq.consumer.update_feed_7', routing_key: '20'}
-            callback: App\Consumer\UpdateFeed\Consumer7
+            callback: FeedBundle\Consumer\UpdateFeed\Consumer7
             idle_timeout: 300
             idle_timeout_exit_code: 0
             graceful_max_execution:
@@ -157,7 +157,7 @@ old_sound_rabbit_mq:
             connection: default
             exchange_options: {name: 'old_sound_rabbit_mq.update_feed', type: x-consistent-hash}
             queue_options: {name: 'old_sound_rabbit_mq.consumer.update_feed_8', routing_key: '20'}
-            callback: App\Consumer\UpdateFeed\Consumer8
+            callback: FeedBundle\Consumer\UpdateFeed\Consumer8
             idle_timeout: 300
             idle_timeout_exit_code: 0
             graceful_max_execution:
@@ -168,7 +168,7 @@ old_sound_rabbit_mq:
             connection: default
             exchange_options: {name: 'old_sound_rabbit_mq.update_feed', type: x-consistent-hash}
             queue_options: {name: 'old_sound_rabbit_mq.consumer.update_feed_9', routing_key: '20'}
-            callback: App\Consumer\UpdateFeed\Consumer9
+            callback: FeedBundle\Consumer\UpdateFeed\Consumer9
             idle_timeout: 300
             idle_timeout_exit_code: 0
             graceful_max_execution:

@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Consumer\UpdateFeed;
+namespace FeedBundle\Consumer\UpdateFeed;
 
 use StatsdBundle\Client\StatsdAPIClient;
-use App\Consumer\UpdateFeed\Input\Message;
-use App\DTO\SendNotificationDTO;
-use App\Entity\Tweet;
-use App\Entity\User;
-use App\Service\AsyncService;
-use App\Service\FeedService;
+use FeedBundle\Consumer\UpdateFeed\Input\Message;
+use FeedBundle\DTO\SendNotificationDTO;
+use FeedBundle\Service\AsyncService;
+use FeedBundle\Service\FeedService;
 use Doctrine\ORM\EntityManagerInterface;
 use JsonException;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
@@ -51,24 +49,14 @@ class Consumer implements ConsumerInterface
             return $this->reject($e->getMessage());
         }
 
-        $tweetRepository = $this->entityManager->getRepository(Tweet::class);
-        $userRepository = $this->entityManager->getRepository(User::class);
-        $tweet = $tweetRepository->find($message->getTweetId());
-        if (!($tweet instanceof Tweet)) {
-            return $this->reject(sprintf('Tweet ID %s was not found', $message->getTweetId()));
-        }
-
-        $this->feedService->putTweet($tweet, $message->getFollowerId());
-        /** @var User $user */
-        $user = $userRepository->find($message->getFollowerId());
-        if ($user !== null) {
-            $message = (new SendNotificationDTO($message->getFollowerId(), $tweet->getText()))->toAMQPMessage();
-            $this->asyncService->publishToExchange(
-                AsyncService::SEND_NOTIFICATION,
-                $message,
-                $user->getPreferred()
-            );
-        }
+        $tweetDTO = $message->getTweetDTO();
+        $this->feedService->putTweet($tweetDTO, $message->getFollowerId());
+        $notificationMessage = (new SendNotificationDTO($message->getFollowerId(), $tweetDTO->getText()))->toAMQPMessage();
+        $this->asyncService->publishToExchange(
+            AsyncService::SEND_NOTIFICATION,
+            $notificationMessage,
+            $message->getPreferred()
+        );
 
         $this->statsdAPIClient->increment($this->key);
         $this->entityManager->clear();
