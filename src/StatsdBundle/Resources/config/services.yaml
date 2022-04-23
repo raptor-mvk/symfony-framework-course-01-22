@@ -1,7 +1,0 @@
-services:
-
-  StatsdBundle\Client\StatsdAPIClient:
-    arguments:
-      - localhost
-      - 8000
-      - some_application

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bf2db8988e382170dfadfaed19d0350a",
+    "content-hash": "6bdaf5245a01a05192841775df2677f0",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -4876,6 +4876,41 @@
                 "source": "https://github.com/ralouphie/getallheaders/tree/develop"
             },
             "time": "2019-03-08T08:55:37+00:00"
+        },
+        {
+            "name": "raptor-mvk/statsd-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/raptor-mvk/statsd-bundle.git",
+                "reference": "5c7e34fa268d77d210202158d88b949aa972088b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/raptor-mvk/statsd-bundle/zipball/5c7e34fa268d77d210202158d88b949aa972088b",
+                "reference": "5c7e34fa268d77d210202158d88b949aa972088b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "slickdeals/statsd": "^3.1"
+            },
+            "default-branch": true,
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "StatsdBundle\\": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Provides configured StatsdAPIClient",
+            "support": {
+                "source": "https://github.com/raptor-mvk/statsd-bundle/tree/master",
+                "issues": "https://github.com/raptor-mvk/statsd-bundle/issues"
+            },
+            "time": "2022-04-23T15:53:42+00:00"
         },
         {
             "name": "react/promise",
@@ -14020,7 +14055,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "raptor-mvk/statsd-bundle": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
