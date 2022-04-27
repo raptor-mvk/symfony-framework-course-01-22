@@ -4,8 +4,10 @@
 
 1. Заходим в виртуалку и устанавливаем окружение командами (команды для ubuntu 20.04)
     ```shell
+    sudo apt install software-properties-common
+    sudo add-apt-repository ppa:ondrej/php
     sudo apt update
-    sudo apt install curl git unzip nginx postgresql postgresql-contrib rabbitmq-server supervisor memcached libmemcached-tools redis-server php-cli php-fpm php-json php-common php-mysql php-zip php-gd php-mbstring php-curl php-xml php-pear php-bcmath php-pgsql php-memcached php-redis
+    sudo apt install curl git unzip nginx postgresql postgresql-contrib rabbitmq-server supervisor memcached libmemcached-tools redis-server php8.0-cli php8.0-fpm php8.0-common php8.0-mysql php8.0-zip php8.0-gd php8.0-mbstring php8.0-curl php8.0-xml php8.0-bcmath php8.0-pgsql php8.0-memcached php8.0-redis php8.0-igbinary php8.0-msgpack
     ```
 2. Устанавливаем composer
     ```shell
@@ -102,7 +104,7 @@
             fastcgi_index index.php;
             send_timeout 1800;
             fastcgi_read_timeout 1800;
-            fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+            fastcgi_pass unix:/var/run/php/php8.0-fpm.sock;
         }
     }
     ```
@@ -401,7 +403,7 @@
     sudo sed -i -- "s|%SERVER_NAME%|$1|g" /etc/nginx/conf.d/demo.conf
     sudo service nginx restart
     sudo -u www-data composer install -q
-    sudo service php7.4-fpm restart
+    sudo service php8.0-fpm restart
     sudo -u www-data sed -i -- "s|%DATABASE_HOST%|$2|g" .env
     sudo -u www-data sed -i -- "s|%DATABASE_USER%|$3|g" .env
     sudo -u www-data sed -i -- "s|%DATABASE_PASSWORD%|$4|g" .env
@@ -441,14 +443,14 @@
 8. Добавляем код в main-ветку и пушим в GitLab
 9. В репозитории в GitLab в разделе `CI / CD -> Pipelines` можно следить за процессом
 10. Проверяем в интерфейсе RabbitMQ, что консьюмеры запустились
-11. Проверяем POST-запросом на `/api/v1/user`, что API отвечает
+11. Выполняем запрос Add user v5 из Postman-коллекции v10 с заменой переменной host на адрес сервера
    
 ## Переходим на blue-green deploy
 
 1. На сервере
     1. удаляем на сервере содержимое каталог `/var/www/demo`
     2. создаём каталог `/var/www/demo/shared/log`
-    3. выполняем команду `chmod 777 /var/www/demo -R`
+    3. выполняем команду `sudo chmod 777 /var/www/demo -R`
 2. Исправляем файл `deploy/nginx.conf`
     ```
     server {
@@ -480,7 +482,7 @@
             fastcgi_index index.php;
             send_timeout 1800;
             fastcgi_read_timeout 1800;
-            fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+            fastcgi_pass unix:/var/run/php/php8.0-fpm.sock;
         }
     }
     ```
@@ -751,7 +753,7 @@
     sudo cp deploy/supervisor.conf /etc/supervisor/conf.d/demo.conf -f
     sudo sed -i -- "s|%SERVER_NAME%|$1|g" /etc/nginx/conf.d/demo.conf
     sudo service nginx restart
-    sudo service php7.4-fpm restart
+    sudo service php8.0-fpm restart
     sudo -u www-data php bin/console cache:clear
     sudo service supervisor restart
     ```
