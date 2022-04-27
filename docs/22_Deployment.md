@@ -1,6 +1,7 @@
 # Развёртывание приложения
 
 ## Настраиваем виртуальную машину
+
 1. Заходим в виртуалку и устанавливаем окружение командами (команды для ubuntu 20.04)
     ```shell
     sudo apt update
@@ -435,9 +436,9 @@
               cd demo &&
               sh ./deploy.sh $SERVER1 $DATABASE_HOST $DATABASE_USER $DATABASE_PASSWORD $DATABASE_NAME $RABBITMQ_HOST $RABBITMQ_USER $RABBITMQ_PASSWORD"
       only:
-        - master
+        - main
     ```
-8. Добавляем код в master-ветку и пушим в GitLab
+8. Добавляем код в main-ветку и пушим в GitLab
 9. В репозитории в GitLab в разделе `CI / CD -> Pipelines` можно следить за процессом
 10. Проверяем в интерфейсе RabbitMQ, что консьюмеры запустились
 11. Проверяем POST-запросом на `/api/v1/user`, что API отвечает
@@ -738,7 +739,7 @@
               ( [ ! -d /var/www/demo/current ] || mv -Tf /var/www/demo/current /var/www/demo/previous ) &&
               ln -s /var/www/demo/$DIR /var/www/demo/current"
       only:
-        - master
+        - main
     ```
 5. Пушим код в репозиторий
 
@@ -787,7 +788,7 @@
               ( [ ! -d /var/www/demo/current ] || mv -Tf /var/www/demo/current /var/www/demo/previous ) &&
               ln -s /var/www/demo/$DIR /var/www/demo/current"
       only:
-        - master
+        - main
    
     rollback:
       stage: rollback
