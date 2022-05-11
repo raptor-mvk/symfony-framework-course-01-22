@@ -984,7 +984,7 @@
          }
      }
      ```
-22. Исправляем класс `App\Controller\Api\GetFeed\v1\FeedController`
+22. Исправляем класс `App\Controller\Api\GetFeed\v1\Controller`
      ```
      <?php
     
