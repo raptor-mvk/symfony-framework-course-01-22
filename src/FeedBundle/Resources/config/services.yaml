@@ -1,0 +1,62 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  FeedBundle\:
+    resource: '../../*'
+    exclude: '../../{DependencyInjection,Entity}'
+
+  FeedBundle\Service\AsyncService:
+    calls:
+      - ['registerProducer', [!php/const FeedBundle\Service\AsyncService::SEND_NOTIFICATION, '@old_sound_rabbit_mq.send_notification_producer']]
+
+  FeedBundle\Consumer\UpdateFeed\Consumer0:
+    class: FeedBundle\Consumer\UpdateFeed\Consumer
+    arguments:
+      $key: 'update_feed_0'
+
+  FeedBundle\Consumer\UpdateFeed\Consumer1:
+    class: FeedBundle\Consumer\UpdateFeed\Consumer
+    arguments:
+      $key: 'update_feed_1'
+
+  FeedBundle\Consumer\UpdateFeed\Consumer2:
+    class: FeedBundle\Consumer\UpdateFeed\Consumer
+    arguments:
+      $key: 'update_feed_2'
+
+  FeedBundle\Consumer\UpdateFeed\Consumer3:
+    class: FeedBundle\Consumer\UpdateFeed\Consumer
+    arguments:
+      $key: 'update_feed_3'
+
+  FeedBundle\Consumer\UpdateFeed\Consumer4:
+    class: FeedBundle\Consumer\UpdateFeed\Consumer
+    arguments:
+      $key: 'update_feed_4'
+
+  FeedBundle\Consumer\UpdateFeed\Consumer5:
+    class: FeedBundle\Consumer\UpdateFeed\Consumer
+    arguments:
+      $key: 'update_feed_5'
+
+  FeedBundle\Consumer\UpdateFeed\Consumer6:
+    class: FeedBundle\Consumer\UpdateFeed\Consumer
+    arguments:
+      $key: 'update_feed_6'
+
+  FeedBundle\Consumer\UpdateFeed\Consumer7:
+    class: FeedBundle\Consumer\UpdateFeed\Consumer
+    arguments:
+      $key: 'update_feed_7'
+
+  FeedBundle\Consumer\UpdateFeed\Consumer8:
+    class: FeedBundle\Consumer\UpdateFeed\Consumer
+    arguments:
+      $key: 'update_feed_8'
+
+  FeedBundle\Consumer\UpdateFeed\Consumer9:
+    class: FeedBundle\Consumer\UpdateFeed\Consumer
+    arguments:
+      $key: 'update_feed_9'

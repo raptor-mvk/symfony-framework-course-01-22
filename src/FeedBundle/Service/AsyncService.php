@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Service;
+namespace FeedBundle\Service;
 
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 
 class AsyncService
 {
-    public const ADD_FOLLOWER = 'add_follower';
-    public const PUBLISH_TWEET = 'publish_tweet';
-    public const UPDATE_FEED = 'update_feed';
+    public const SEND_NOTIFICATION = 'send_notification';
 
     /** @var ProducerInterface[] */
     private array $producers;

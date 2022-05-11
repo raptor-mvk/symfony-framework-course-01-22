@@ -431,6 +431,9 @@
     "ralouphie/getallheaders": {
         "version": "3.0.3"
     },
+    "raptor-mvk/statsd-bundle": {
+        "version": "dev-master"
+    },
     "react/promise": {
         "version": "v2.9.0"
     },

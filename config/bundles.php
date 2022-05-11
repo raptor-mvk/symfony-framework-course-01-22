@@ -19,4 +19,6 @@ return [
     FOS\ElasticaBundle\FOSElasticaBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
     Nelmio\ApiDocBundle\NelmioApiDocBundle::class => ['all' => true],
+    StatsdBundle\StatsdBundle::class => ['all' => true],
+    FeedBundle\FeedBundle::class => ['all' => true],
 ];

@@ -1,0 +1,5 @@
+statsd:
+  client:
+    host: graphite
+    port: 8125
+    namespace: my_app

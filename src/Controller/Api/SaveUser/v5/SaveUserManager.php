@@ -2,7 +2,7 @@
 
 namespace App\Controller\Api\SaveUser\v5;
 
-use App\Client\StatsdAPIClient;
+use StatsdBundle\Client\StatsdAPIClient;
 use App\Controller\Api\SaveUser\v5\Input\SaveUserDTO;
 use App\Controller\Api\SaveUser\v5\Output\UserIsSavedDTO;
 use App\Entity\User;
@@ -44,6 +44,7 @@ class SaveUserManager
         $result = new UserIsSavedDTO();
         $context = (new SerializationContext())->setGroups(['user1', 'user2']);
         $result->loadFromJsonString($this->serializer->serialize($user, 'json', $context));
+        $this->statsdAPIClient->increment('save_user.v5');
 
         return $result;
     }
