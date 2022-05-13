@@ -3,6 +3,13 @@ framework:
         # reset services after consuming messages
         reset_on_message: true
 
+        buses:
+            messenger.bus.default:
+                middleware:
+                    - doctrine_ping_connection
+                    - doctrine_close_connection
+                    - doctrine_transaction
+
         # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
         # failure_transport: failed
 
@@ -26,3 +33,5 @@ framework:
         routing:
             App\DTO\AddFollowersDTO: add_followers
             FeedBundle\DTO\SendNotificationDTO: doctrine
+            FeedBundle\DTO\SendNotificationAsyncDTO: send_notification
+

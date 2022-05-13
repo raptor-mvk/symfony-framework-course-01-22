@@ -35,4 +35,19 @@ class SendNotificationDTO
     {
         return json_encode($this->payload, JSON_THROW_ON_ERROR);
     }
+
+    public function getUserId(): int
+    {
+        return $this->userId;
+    }
+
+    public function getText(): string
+    {
+        return $this->text;
+    }
+
+    public function getPreferred(): string
+    {
+        return $this->preferred;
+    }
 }

@@ -57,10 +57,10 @@ class Consumer implements ConsumerInterface
         try {
             $this->entityManager->getConnection()->beginTransaction();
             $this->feedService->putTweet($tweetDTO, $message->getFollowerId());
-            if ($message->getFollowerId() === 5) {
+/*            if ($message->getFollowerId() === 5) {
                 sleep(2);
                 throw new Exception();
-            }
+            }*/
             $notificationMessage = new SendNotificationDTO($message->getFollowerId(), $tweetDTO->getText(), $message->getPreferred());
             $this->messageBus->dispatch($notificationMessage);
             $this->entityManager->getConnection()->commit();
