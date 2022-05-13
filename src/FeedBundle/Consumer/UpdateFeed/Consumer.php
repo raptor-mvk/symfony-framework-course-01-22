@@ -11,6 +11,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use JsonException;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
+use Symfony\Component\Messenger\Bridge\Amqp\Transport\AmqpStamp;
+use Symfony\Component\Messenger\Envelope;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class Consumer implements ConsumerInterface
@@ -21,18 +24,18 @@ class Consumer implements ConsumerInterface
 
     private FeedService $feedService;
 
-    private AsyncService $asyncService;
+    private MessageBusInterface $messageBus;
 
     private StatsdAPIClient $statsdAPIClient;
 
     private string $key;
 
-    public function __construct(EntityManagerInterface $entityManager, ValidatorInterface $validator, FeedService $feedService, AsyncService $asyncService, StatsdAPIClient $statsdAPIClient, string $key)
+    public function __construct(EntityManagerInterface $entityManager, ValidatorInterface $validator, FeedService $feedService, MessageBusInterface $messageBus, StatsdAPIClient $statsdAPIClient, string $key)
     {
         $this->entityManager = $entityManager;
         $this->validator = $validator;
         $this->feedService = $feedService;
-        $this->asyncService = $asyncService;
+        $this->messageBus = $messageBus;
         $this->statsdAPIClient = $statsdAPIClient;
         $this->key = $key;
     }
@@ -51,12 +54,8 @@ class Consumer implements ConsumerInterface
 
         $tweetDTO = $message->getTweetDTO();
         $this->feedService->putTweet($tweetDTO, $message->getFollowerId());
-        $notificationMessage = (new SendNotificationDTO($message->getFollowerId(), $tweetDTO->getText()))->toAMQPMessage();
-        $this->asyncService->publishToExchange(
-            AsyncService::SEND_NOTIFICATION,
-            $notificationMessage,
-            $message->getPreferred()
-        );
+        $notificationMessage = new SendNotificationDTO($message->getFollowerId(), $tweetDTO->getText());
+        $this->messageBus->dispatch(new Envelope($notificationMessage, [new AmqpStamp($message->getPreferred(), 0)]));
 
         $this->statsdAPIClient->increment($this->key);
         $this->entityManager->clear();
