@@ -15,6 +15,7 @@
         "friendsofsymfony/rest-bundle": "^3.3",
         "guzzlehttp/guzzle": "^7.4",
         "jms/serializer-bundle": "^4.0",
+        "kunicmarko/jms-messenger-adapter": "^1.1",
         "lexik/jwt-authentication-bundle": "^2.14",
         "nelmio/api-doc-bundle": "^4.8",
         "nyholm/psr7": "^1.5",

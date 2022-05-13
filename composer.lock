@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d1f9d790cbec6dbc2155e1d30ab16e2",
+    "content-hash": "20e3bd03eb260b1d14b383aaa5a635ab",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2732,6 +2732,77 @@
                 }
             ],
             "time": "2021-12-01T12:22:07+00:00"
+        },
+        {
+            "name": "kunicmarko/jms-messenger-adapter",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kunicmarko20/jms-messenger-adapter.git",
+                "reference": "e676dc7c607c51e1d637d0783e75b4716e4e1abf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kunicmarko20/jms-messenger-adapter/zipball/e676dc7c607c51e1d637d0783e75b4716e4e1abf",
+                "reference": "e676dc7c607c51e1d637d0783e75b4716e4e1abf",
+                "shasum": ""
+            },
+            "require": {
+                "jms/serializer": "^2.3 || ^3.9",
+                "php": "^7.2 || ^8.0",
+                "symfony/messenger": "^4.4 || ^5.3"
+            },
+            "require-dev": {
+                "behat/behat": "^3.6",
+                "behat/symfony2-extension": "^2.1",
+                "jms/serializer-bundle": "^3.9",
+                "matthiasnoback/symfony-dependency-injection-test": "dev-master",
+                "php-coveralls/php-coveralls": "^2.4",
+                "phpunit/phpunit": "^8.5 || ^9.5",
+                "symfony/config": "^4.4 || ^5.3",
+                "symfony/debug": "^4.4 || ^5.3",
+                "symfony/dependency-injection": "^4.4 || ^5.3",
+                "symfony/framework-bundle": "^4.4 || ^5.3",
+                "symfony/http-kernel": "^4.4 || ^5.3"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "KunicMarko\\JMSMessengerAdapter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marko Kunic",
+                    "email": "kunicmarko20@gmail.com",
+                    "homepage": "https://twitter.com/kunicmarko20"
+                }
+            ],
+            "description": "Use JMS Serializer with Symfony Messenger.",
+            "homepage": "https://github.com/kunicmarko20/jms-messenger-adapter",
+            "keywords": [
+                "Messenger",
+                "adapter",
+                "bundle",
+                "jms",
+                "serializer",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://github.com/kunicmarko20/jms-messenger-adapter/issues",
+                "source": "https://github.com/kunicmarko20/jms-messenger-adapter/tree/1.1.0"
+            },
+            "abandoned": true,
+            "time": "2021-06-16T09:55:31+00:00"
         },
         {
             "name": "laminas/laminas-code",
