@@ -55,14 +55,17 @@ class Consumer implements ConsumerInterface
 
         $tweetDTO = $message->getTweetDTO();
         try {
+            $this->entityManager->getConnection()->beginTransaction();
             $this->feedService->putTweet($tweetDTO, $message->getFollowerId());
             if ($message->getFollowerId() === 5) {
                 sleep(2);
                 throw new Exception();
             }
-            $notificationMessage = new SendNotificationDTO($message->getFollowerId(), $tweetDTO->getText());
-            $this->messageBus->dispatch(new Envelope($notificationMessage, [new AmqpStamp($message->getPreferred(), 0)]));
+            $notificationMessage = new SendNotificationDTO($message->getFollowerId(), $tweetDTO->getText(), $message->getPreferred());
+            $this->messageBus->dispatch($notificationMessage);
+            $this->entityManager->getConnection()->commit();
         } catch (Throwable $e) {
+            $this->entityManager->getConnection()->rollBack();
             return self::MSG_REJECT_REQUEUE;
         }
 

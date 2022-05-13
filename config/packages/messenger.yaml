@@ -25,4 +25,4 @@ framework:
 
         routing:
             App\DTO\AddFollowersDTO: add_followers
-            FeedBundle\DTO\SendNotificationDTO: send_notification
+            FeedBundle\DTO\SendNotificationDTO: doctrine

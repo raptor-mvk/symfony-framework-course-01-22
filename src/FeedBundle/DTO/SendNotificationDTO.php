@@ -7,6 +7,7 @@ use JMS\Serializer\Annotation as JMS;
 
 class SendNotificationDTO
 {
+    #[JMS\Exclude]
     private array $payload;
 
     #[JMS\Type('int')]
@@ -16,11 +17,15 @@ class SendNotificationDTO
     #[JMS\Type('string')]
     private string $text;
 
-    public function __construct(int $userId, string $text)
+    #[JMS\Type('string')]
+    private string $preferred;
+
+    public function __construct(int $userId, string $text, string $preferred)
     {
         $this->payload = ['userId' => $userId, 'text' => $text];
         $this->userId = $userId;
         $this->text = $text;
+        $this->preferred = $preferred;
     }
 
     /**
