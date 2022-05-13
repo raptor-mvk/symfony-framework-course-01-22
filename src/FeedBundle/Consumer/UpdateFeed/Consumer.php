@@ -2,10 +2,10 @@
 
 namespace FeedBundle\Consumer\UpdateFeed;
 
+use Exception;
 use StatsdBundle\Client\StatsdAPIClient;
 use FeedBundle\Consumer\UpdateFeed\Input\Message;
 use FeedBundle\DTO\SendNotificationDTO;
-use FeedBundle\Service\AsyncService;
 use FeedBundle\Service\FeedService;
 use Doctrine\ORM\EntityManagerInterface;
 use JsonException;
@@ -15,6 +15,7 @@ use Symfony\Component\Messenger\Bridge\Amqp\Transport\AmqpStamp;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Throwable;
 
 class Consumer implements ConsumerInterface
 {
@@ -53,9 +54,17 @@ class Consumer implements ConsumerInterface
         }
 
         $tweetDTO = $message->getTweetDTO();
-        $this->feedService->putTweet($tweetDTO, $message->getFollowerId());
-        $notificationMessage = new SendNotificationDTO($message->getFollowerId(), $tweetDTO->getText());
-        $this->messageBus->dispatch(new Envelope($notificationMessage, [new AmqpStamp($message->getPreferred(), 0)]));
+        try {
+            $this->feedService->putTweet($tweetDTO, $message->getFollowerId());
+            if ($message->getFollowerId() === 5) {
+                sleep(2);
+                throw new Exception();
+            }
+            $notificationMessage = new SendNotificationDTO($message->getFollowerId(), $tweetDTO->getText());
+            $this->messageBus->dispatch(new Envelope($notificationMessage, [new AmqpStamp($message->getPreferred(), 0)]));
+        } catch (Throwable $e) {
+            return self::MSG_REJECT_REQUEUE;
+        }
 
         $this->statsdAPIClient->increment($this->key);
         $this->entityManager->clear();
