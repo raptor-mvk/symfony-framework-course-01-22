@@ -11,8 +11,11 @@ framework:
                 dsn: "%env(MESSENGER_DOCTRINE_TRANSPORT_DSN)%"
             amqp:
                 dsn: "%env(MESSENGER_AMQP_TRANSPORT_DSN)%"
+                options:
+                    exchange:
+                        name: 'old_sound_rabbit_mq.add_followers'
+                        type: direct
             sync: 'sync://'
 
         routing:
-            # Route your messages to the transports
-            # 'App\Message\YourMessage': async
+            App\DTO\AddFollowersDTO: amqp
