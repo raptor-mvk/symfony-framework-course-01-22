@@ -2,16 +2,20 @@
 
 namespace FeedBundle\Consumer\UpdateFeed;
 
+use Exception;
 use StatsdBundle\Client\StatsdAPIClient;
 use FeedBundle\Consumer\UpdateFeed\Input\Message;
 use FeedBundle\DTO\SendNotificationDTO;
-use FeedBundle\Service\AsyncService;
 use FeedBundle\Service\FeedService;
 use Doctrine\ORM\EntityManagerInterface;
 use JsonException;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
+use Symfony\Component\Messenger\Bridge\Amqp\Transport\AmqpStamp;
+use Symfony\Component\Messenger\Envelope;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Throwable;
 
 class Consumer implements ConsumerInterface
 {
@@ -21,18 +25,18 @@ class Consumer implements ConsumerInterface
 
     private FeedService $feedService;
 
-    private AsyncService $asyncService;
+    private MessageBusInterface $messageBus;
 
     private StatsdAPIClient $statsdAPIClient;
 
     private string $key;
 
-    public function __construct(EntityManagerInterface $entityManager, ValidatorInterface $validator, FeedService $feedService, AsyncService $asyncService, StatsdAPIClient $statsdAPIClient, string $key)
+    public function __construct(EntityManagerInterface $entityManager, ValidatorInterface $validator, FeedService $feedService, MessageBusInterface $messageBus, StatsdAPIClient $statsdAPIClient, string $key)
     {
         $this->entityManager = $entityManager;
         $this->validator = $validator;
         $this->feedService = $feedService;
-        $this->asyncService = $asyncService;
+        $this->messageBus = $messageBus;
         $this->statsdAPIClient = $statsdAPIClient;
         $this->key = $key;
     }
@@ -50,13 +54,20 @@ class Consumer implements ConsumerInterface
         }
 
         $tweetDTO = $message->getTweetDTO();
-        $this->feedService->putTweet($tweetDTO, $message->getFollowerId());
-        $notificationMessage = (new SendNotificationDTO($message->getFollowerId(), $tweetDTO->getText()))->toAMQPMessage();
-        $this->asyncService->publishToExchange(
-            AsyncService::SEND_NOTIFICATION,
-            $notificationMessage,
-            $message->getPreferred()
-        );
+        try {
+            $this->entityManager->getConnection()->beginTransaction();
+            $this->feedService->putTweet($tweetDTO, $message->getFollowerId());
+/*            if ($message->getFollowerId() === 5) {
+                sleep(2);
+                throw new Exception();
+            }*/
+            $notificationMessage = new SendNotificationDTO($message->getFollowerId(), $tweetDTO->getText(), $message->getPreferred());
+            $this->messageBus->dispatch($notificationMessage);
+            $this->entityManager->getConnection()->commit();
+        } catch (Throwable $e) {
+            $this->entityManager->getConnection()->rollBack();
+            return self::MSG_REJECT_REQUEUE;
+        }
 
         $this->statsdAPIClient->increment($this->key);
         $this->entityManager->clear();

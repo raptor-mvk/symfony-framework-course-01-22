@@ -1,0 +1,37 @@
+framework:
+    messenger:
+        # reset services after consuming messages
+        reset_on_message: true
+
+        buses:
+            messenger.bus.default:
+                middleware:
+                    - doctrine_ping_connection
+                    - doctrine_close_connection
+                    - doctrine_transaction
+
+        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
+        # failure_transport: failed
+
+        transports:
+            doctrine:
+                dsn: "%env(MESSENGER_DOCTRINE_TRANSPORT_DSN)%"
+            add_followers:
+                dsn: "%env(MESSENGER_AMQP_TRANSPORT_DSN)%"
+                options:
+                    exchange:
+                        name: 'old_sound_rabbit_mq.add_followers'
+                        type: direct
+            send_notification:
+                dsn: "%env(MESSENGER_AMQP_TRANSPORT_DSN)%"
+                options:
+                    exchange:
+                        name: 'old_sound_rabbit_mq.send_notification'
+                        type: topic
+            sync: 'sync://'
+
+        routing:
+            App\DTO\AddFollowersDTO: add_followers
+            FeedBundle\DTO\SendNotificationDTO: doctrine
+            FeedBundle\DTO\SendNotificationAsyncDTO: send_notification
+
