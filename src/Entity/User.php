@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Table(name: '`user`')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[ApiResource(graphql: ['itemQuery' => ['item_query' => UserResolver::class], 'collectionQuery' => ['collection_query' => UserCollectionResolver::class]])]
+#[ApiResource(graphql: ['itemQuery' => ['item_query' => UserResolver::class, 'args' => ['id' => ['type' => 'Int'], 'login' => ['type' => 'String']], 'read' => false], 'collectionQuery' => ['collection_query' => UserCollectionResolver::class]])]
 #[ApiFilter(SearchFilter::class, properties: ['login' => 'partial'])]
 #[ApiFilter(OrderFilter::class, properties: ['login'])]
 class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthenticatedUserInterface
