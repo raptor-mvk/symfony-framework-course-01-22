@@ -339,4 +339,12 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
     {
         $this->preferred = $preferred;
     }
+
+    /**
+     * @return Subscription[]
+     */
+    public function getSubscriptionFollowers(): array
+    {
+        return $this->subscriptionFollowers->toArray();
+    }
 }
