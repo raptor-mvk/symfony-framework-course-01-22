@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -12,6 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\Index(columns: ['author_id'], name: 'subscription__author_id__ind')]
 #[ORM\Index(columns: ['follower_id'], name: 'subscription__follower_id__ind')]
 #[ApiResource]
+#[ApiFilter(SearchFilter::class, properties: ['follower.login' => 'partial'])]
 class Subscription
 {
     #[ORM\Column(name: 'id', type: 'bigint', unique: true)]
