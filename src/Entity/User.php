@@ -8,6 +8,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\UserRepository;
 use App\Resolver\UserCollectionResolver;
+use App\Resolver\UserResolver;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,7 +22,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Table(name: '`user`')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[ApiResource(graphql: ['collectionQuery' => ['collection_query' => UserCollectionResolver::class]])]
+#[ApiResource(graphql: ['itemQuery' => ['item_query' => UserResolver::class], 'collectionQuery' => ['collection_query' => UserCollectionResolver::class]])]
 #[ApiFilter(SearchFilter::class, properties: ['login' => 'partial'])]
 #[ApiFilter(OrderFilter::class, properties: ['login'])]
 class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthenticatedUserInterface
