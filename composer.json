@@ -53,7 +53,8 @@
         "symfony/twig-bundle": "5.4.*",
         "symfony/validator": "5.4.*",
         "symfony/webpack-encore-bundle": "^1.13",
-        "symfony/yaml": "5.4.*"
+        "symfony/yaml": "5.4.*",
+        "webonyx/graphql-php": "^14.11"
     },
     "config": {
         "allow-plugins": {

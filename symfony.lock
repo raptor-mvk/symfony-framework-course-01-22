@@ -932,6 +932,9 @@
     "webmozart/assert": {
         "version": "1.10.0"
     },
+    "webonyx/graphql-php": {
+        "version": "v14.11.6"
+    },
     "willdurand/jsonp-callback-validator": {
         "version": "v2.0.0"
     },
