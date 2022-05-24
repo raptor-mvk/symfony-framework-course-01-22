@@ -277,13 +277,13 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
     }
 
     /**
-     * @param string[] $roles
+     * @param string[]|string $roles
      *
      * @throws JsonException
      */
-    public function setRoles(array $roles): void
+    public function setRoles($roles): void
     {
-        $this->roles = json_encode($roles, JSON_THROW_ON_ERROR);
+        $this->roles = is_array($roles)? json_encode($roles, JSON_THROW_ON_ERROR) : $roles;
     }
 
     public function getSalt(): ?string
