@@ -1,4 +1,18 @@
 {
+    "api-platform/core": {
+        "version": "2.6",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.5",
+            "ref": "05b57782a78c21a664a42055dc11cf1954ca36bb"
+        },
+        "files": [
+            "config/packages/api_platform.yaml",
+            "config/routes/api_platform.yaml",
+            "src/Entity/.gitignore"
+        ]
+    },
     "behat/gherkin": {
         "version": "v4.9.0"
     },
@@ -170,6 +184,9 @@
     "fakerphp/faker": {
         "version": "v1.19.0"
     },
+    "fig/link-util": {
+        "version": "1.2.0"
+    },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
     },
@@ -305,6 +322,18 @@
             "config/routes/nelmio_api_doc.yaml"
         ]
     },
+    "nelmio/cors-bundle": {
+        "version": "2.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.5",
+            "ref": "6bea22e6c564fba3a1391615cada1437d0bde39c"
+        },
+        "files": [
+            "config/packages/nelmio_cors.yaml"
+        ]
+    },
     "nikic/php-parser": {
         "version": "v4.13.2"
     },
@@ -436,6 +465,9 @@
     },
     "psr/http-message": {
         "version": "1.0.1"
+    },
+    "psr/link": {
+        "version": "1.1.1"
     },
     "psr/log": {
         "version": "1.1.4"
@@ -765,6 +797,9 @@
     "symfony/property-info": {
         "version": "v5.4.3"
     },
+    "symfony/proxy-manager-bridge": {
+        "version": "v5.4.6"
+    },
     "symfony/psr-http-message-bridge": {
         "version": "v2.1.2"
     },
@@ -811,6 +846,9 @@
     "symfony/security-http": {
         "version": "v5.4.5"
     },
+    "symfony/serializer": {
+        "version": "v5.4.8"
+    },
     "symfony/service-contracts": {
         "version": "v2.5.0"
     },
@@ -855,6 +893,9 @@
         "version": "v5.4.3"
     },
     "symfony/var-exporter": {
+        "version": "v5.4.3"
+    },
+    "symfony/web-link": {
         "version": "v5.4.3"
     },
     "symfony/webpack-encore-bundle": {
