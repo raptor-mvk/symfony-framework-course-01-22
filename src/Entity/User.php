@@ -7,6 +7,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\UserRepository;
+use App\Resolver\UserCollectionResolver;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -20,7 +21,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Table(name: '`user`')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[ApiResource]
+#[ApiResource(graphql: ['collectionQuery' => ['collection_query' => UserCollectionResolver::class]])]
 #[ApiFilter(SearchFilter::class, properties: ['login' => 'partial'])]
 #[ApiFilter(OrderFilter::class, properties: ['login'])]
 class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthenticatedUserInterface
@@ -98,6 +99,9 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
     #[JMS\Type('string')]
     #[JMS\Groups(['elastica'])]
     private ?string $preferred = null;
+
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private ?bool $isProtected;
 
     public function __construct()
     {
@@ -351,5 +355,15 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
     public function getSubscriptionFollowers(): array
     {
         return $this->subscriptionFollowers->toArray();
+    }
+
+    public function isProtected(): bool
+    {
+        return $this->isProtected ?? false;
+    }
+
+    public function setIsProtected(bool $isProtected): void
+    {
+        $this->isProtected = $isProtected;
     }
 }
