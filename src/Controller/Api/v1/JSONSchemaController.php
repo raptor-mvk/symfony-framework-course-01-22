@@ -25,6 +25,20 @@ class JSONSchemaController extends AbstractFOSRestController
         $className = 'App\\Entity\\'.ucfirst($resource);
         $schema = $this->jsonSchemaFactory->buildSchema($className);
         $arraySchema = json_decode(json_encode($schema), true);
+        foreach ($arraySchema['definitions'] as $key => $value) {
+            $entityKey = $key;
+            break;
+        }
+        $unnecessaryPropertyKeys = array_filter(
+            array_keys($arraySchema['definitions'][$entityKey]['properties']),
+            static function (string $key) {
+                return $key[0] === '@';
+            }
+        );
+        foreach ($unnecessaryPropertyKeys as $key) {
+            unset($arraySchema['definitions'][$entityKey]['properties'][$key]);
+        }
+
         return View::create($arraySchema);
     }
 }
