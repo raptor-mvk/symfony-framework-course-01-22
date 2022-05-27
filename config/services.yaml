@@ -126,3 +126,6 @@ services:
         arguments:
             - '@feed_http_client'
             - 'http://nginx:80'
+
+    App\Persister\AsyncMessagePersisterDecorator:
+        decorates: 'api_platform.doctrine.orm.data_persister'
