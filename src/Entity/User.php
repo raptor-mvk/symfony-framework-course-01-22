@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\DTO\UserDTO;
 use App\Repository\UserRepository;
 use App\Resolver\UserCollectionResolver;
 use App\Resolver\UserResolver;
@@ -22,7 +23,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Table(name: '`user`')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[ApiResource(graphql: ['itemQuery' => ['item_query' => UserResolver::class, 'args' => ['id' => ['type' => 'Int'], 'login' => ['type' => 'String']], 'read' => false], 'collectionQuery' => ['collection_query' => UserCollectionResolver::class]])]
+#[ApiResource(graphql: ['itemQuery' => ['item_query' => UserResolver::class, 'args' => ['id' => ['type' => 'Int'], 'login' => ['type' => 'String']], 'read' => false], 'collectionQuery' => ['collection_query' => UserCollectionResolver::class]], output: UserDTO::class)]
 #[ApiFilter(SearchFilter::class, properties: ['login' => 'partial'])]
 #[ApiFilter(OrderFilter::class, properties: ['login'])]
 class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthenticatedUserInterface
@@ -104,11 +105,15 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
     #[ORM\Column(type: 'boolean', nullable: true)]
     private ?bool $isProtected;
 
+    #[ORM\OneToMany(mappedBy: 'follower', targetEntity: 'Subscription')]
+    private Collection $followed;
+
     public function __construct()
     {
         $this->tweets = new ArrayCollection();
         $this->authors = new ArrayCollection();
         $this->followers = new ArrayCollection();
+        $this->followed = new ArrayCollection();
         $this->subscriptionAuthors = new ArrayCollection();
         $this->subscriptionFollowers = new ArrayCollection();
     }
@@ -366,5 +371,13 @@ class User implements HasMetaTimestampsInterface, UserInterface, PasswordAuthent
     public function setIsProtected(bool $isProtected): void
     {
         $this->isProtected = $isProtected;
+    }
+
+    /**
+     * @return Subscription[]
+     */
+    public function getFollowed(): array
+    {
+        return $this->followed->getValues();
     }
 }
