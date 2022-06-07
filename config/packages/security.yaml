@@ -10,6 +10,10 @@ security:
                     user:
                         password: 'other_pass'
                         roles: 'ROLE_USER'
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: login
 
     password_hashers:
         App\Entity\User: auto
@@ -20,14 +24,21 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            http_basic:
-                realm: Secured Area
-            lazy: true
-            provider: users_in_memory
+            stateless: true
+            provider: app_user_provider
+            json_login:
+                check_path: /authentication_token
+                username_path: login
+                password_path: password
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
 
     access_control:
-        - { path: ^/api/v4/save-user, roles: ROLE_ADMIN }
-        - { path: ^/api/doc, roles: ROLE_ADMIN }
+        - { path: ^/authentication_token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
     security:

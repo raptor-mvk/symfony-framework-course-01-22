@@ -14,3 +14,4 @@ fos_rest:
         rules:
             - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [ json, html ] }
             - { path: ^/server-api, prefer_extension: true, fallback_format: json, priorities: [ json, html ] }
+            - { path: ^/authentication_token, prefer_extension: true, fallback_format: json, priorities: [ json, html ] }

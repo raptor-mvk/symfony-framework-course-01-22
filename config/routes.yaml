@@ -16,3 +16,7 @@ server_api:
   resource: "@FeedBundle/Controller/ServerApi"
   type: annotation
   prefix: /server-api
+
+authentication_token:
+  path: /authentication_token
+  methods: ['POST']
