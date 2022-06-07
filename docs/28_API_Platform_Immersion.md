@@ -45,12 +45,11 @@
     
         public function persist($data, array $context = [])
         {
-            /** @var Tweet $result */
             $result = $this->decoratedPersister->persist($data, $context);
-    
-            $this->asyncService->publishToExchange(AsyncService::PUBLISH_TWEET, $result->toAMPQMessage());
-    
-            return $result;
+
+            if ($result instanceof Tweet) {
+                $this->asyncService->publishToExchange(AsyncService::PUBLISH_TWEET, $result->toAMPQMessage());
+            }
         }
     
         public function remove($data, array $context = [])
@@ -79,9 +78,9 @@
     {
         public string $login;
 
-        public ?string $email;
+        public string $email;
 
-        public ?string $phone;
+        public string $phone;
 
         public array $followers;
 
